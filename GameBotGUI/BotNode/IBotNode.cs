@@ -7,8 +7,8 @@ namespace GameBotGUI
 {
     interface IBotNode
     {
-        String Name { get; set; }
-        BotNodeType Type { get; set; }
+        String Name { get; }
+        BotNodeType Type { get; }
         void SetOptions(Dictionary<String, Object> dict);
         Dictionary<String, Object> getNonDefaultOptions();
     }

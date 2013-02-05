@@ -12,8 +12,9 @@ namespace GameBotGUI
         protected Dictionary<String, Object> defaultOptions = BotNodeUtilities.GenerateDefaultOptionsDictionary();
         private Dictionary<String, Object> options = BotNodeUtilities.GenerateDefaultOptionsDictionary();
 
-        public String Name { get { return _name; } set {} }
-        public BotNodeType Type { get { return _type; } set {} }
+        public String Name { get { return _name; } }
+        public BotNodeType Type { get { return _type; } }
+        public String Display { get { return ToString(); } }
 
         public GBGBotNode(String name, BotNodeType type)
         {
@@ -21,7 +22,7 @@ namespace GameBotGUI
             _type = type;
         }
 
-        public Object Clone()
+        public virtual Object Clone()
         {
             GBGBotNode newNode = new GBGBotNode(Name, Type);
             newNode.SetOptions(getNonDefaultOptions());
@@ -52,6 +53,11 @@ namespace GameBotGUI
                 return defaultOptions[key];
 
             throw new ArgumentOutOfRangeException();
+        }
+
+        public new String ToString()
+        {
+            return "[" + Type + "]: " + Name;
         }
     }
 }

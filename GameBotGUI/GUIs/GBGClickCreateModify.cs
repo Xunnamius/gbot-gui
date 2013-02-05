@@ -26,7 +26,7 @@ namespace GameBotGUI
         public Boolean OkExit { get { return _okExit; } }
 
         protected Boolean inCreateMode;
-        internal ObservableCollection<MacroRecordBase> Records;
+        internal ObservableCollection<MacroRecordBase> Records = new ObservableCollection<MacroRecordBase>();
 
         public GBGClickCreateModify(GBGMain parent)
         {
@@ -34,7 +34,6 @@ namespace GameBotGUI
             this.parent = parent;
             inCreateMode = false;
 
-            Records = new ObservableCollection<MacroRecordBase>();
             nodeSettings = SettingsUtilities.GenerateDefaultNodeSettingsDictionary();
             timeSettings = SettingsUtilities.GenerateDefaultTimeSettingsDictionary();
         }
@@ -45,13 +44,8 @@ namespace GameBotGUI
             parent = mainForm;
             inCreateMode = true;
 
-            ClickNode newNode = new ClickNode(txbName.Text.Length > 0 ? txbName.Text : null);
-            newNode.SetOption("records", Records.ToList<MacroRecordBase>());
-            newNode.SetOption("nodeSettings", nodeSettings);
-            newNode.SetOption("timeSettings", timeSettings);
-
             txbName.Text = clickNode.Name;
-            Records = new ObservableCollection<MacroRecordBase>((List<MacroRecordBase>) clickNode.GetOption("records"));
+            Records = (ObservableCollection<MacroRecordBase>) clickNode.GetOption("records");
             nodeSettings = new Dictionary<string, object>((Dictionary<string, object>) clickNode.GetOption("nodeSettings"));
             timeSettings = new Dictionary<string, object>((Dictionary<string, object>) clickNode.GetOption("timeSettings"));
         }
@@ -64,12 +58,6 @@ namespace GameBotGUI
 
         private void GBGCreateAndModify_Load(object sender, EventArgs e)
         {
-            long frequency = Stopwatch.Frequency;
-            long nanosecPerTick = (1000L*1000L*1000L) / frequency;
-            parent.WriteLogLine("**Timer frequency in ticks per second = ", frequency);
-            parent.WriteLogLine("*-*Duration stopwatch estimated to be accurate to within ",
-                nanosecPerTick, " nanoseconds on this system");
-
             lbRecords.DisplayMember = "Display";
             setDefaultTitle();
 
@@ -94,7 +82,8 @@ namespace GameBotGUI
                 catch(Exception ignore) { }
             });
 
-            Records.Clear();
+            if(Records.Count > 0) Records.Move(0, 0);
+            else Records.Clear();
         }
 
         internal ClickNode GetGeneratedNode()
@@ -273,9 +262,9 @@ namespace GameBotGUI
             if(txbName.Text.Length > 0)
             {
                 generatedNode = new ClickNode(txbName.Text.Length > 0 ? txbName.Text : null);
-                generatedNode.SetOption("records", Records);
-                generatedNode.SetOption("nodeSettings", nodeSettings);
-                generatedNode.SetOption("timeSettings", timeSettings);
+                generatedNode.SetOption("records", MacroRecordBase.DeepCopy(Records));
+                generatedNode.SetOption("nodeSettings", nodeSettings.ToDictionary(entry => entry.Key, entry => entry.Value));
+                generatedNode.SetOption("timeSettings", timeSettings.ToDictionary(entry => entry.Key, entry => entry.Value));
 
                 _okExit = true;
                 Close();
@@ -286,8 +275,9 @@ namespace GameBotGUI
 
         private void btnModifyRecord_Click(object sender, EventArgs e)
         {
+            int ndx = lbRecords.SelectedIndex;
             MacroRecordBase record = (MacroRecordBase) lbRecords.SelectedItem;
-            int ndx = Records.IndexOf(record);
+            
 
             using(GBGClickAddModifyRecord modForm = new GBGClickAddModifyRecord(record))
             {
@@ -298,7 +288,8 @@ namespace GameBotGUI
 
                     Records.RemoveAt(ndx);
                     Records.Insert(ndx, gen);
-                    parent.WriteLogLine("Record modification accepted (at the bottom of the queue)!");
+                    lbRecords.SelectedIndex = ndx;
+                    parent.WriteLogLine("Record modification accepted!");
                 }
 
                 else parent.WriteLogLine("Record modification attempt cancelled.");
@@ -312,7 +303,13 @@ namespace GameBotGUI
                 modForm.ShowDialog(this);
                 if(modForm.OkExit)
                 {
-                    Records.Add(modForm.GetGeneratedRecord());
+                    MacroRecordBase mac = modForm.GetGeneratedRecord();
+
+                    if(lbRecords.SelectedIndex >= 0)
+                        Records.Insert(lbRecords.SelectedIndex+1, mac);
+                    else
+                        Records.Add(mac);
+
                     parent.WriteLogLine("New record accepted!");
                 }
 

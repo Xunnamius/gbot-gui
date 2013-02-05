@@ -13,7 +13,7 @@ namespace GameBotGUI
             
         }
 
-        public new Object Clone()
+        public override Object Clone()
         {
             ClickNode newNode = new ClickNode(Name);
             newNode.SetOptions(getNonDefaultOptions());

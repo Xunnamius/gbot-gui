@@ -43,7 +43,7 @@ namespace GameBotGUI
             return new Dictionary<string, object>()
             {
                 { "cbEntropy", 1 },
-                { "numForcedPause", 5 }
+                { "numForcedPause", 0 }
             };
         }
 
@@ -69,7 +69,7 @@ namespace GameBotGUI
                     }
 
                     else if(control is NumericUpDown)
-                        ((NumericUpDown) control).Value = (Int32) setting.Value;
+                        SetNumericUpDownValue((NumericUpDown) control, setting.Value);
                 }
             }
         }
@@ -80,6 +80,26 @@ namespace GameBotGUI
             if(state == CheckState.Indeterminate) stateInt32 = 1;
             else if(state == CheckState.Checked)  stateInt32 = 2;
             return stateInt32;
+        }
+
+        // Depending on the max limit of the NumericUpDown,
+        // it might be a long or a decimal...
+        public static void SetNumericUpDownValue(NumericUpDown control, object value)
+        {
+            control.Value = ToInt32(value);
+        }
+
+        public static Int32 ToInt32(object value)
+        {
+            try
+            {
+                return (Int32) value;
+            }
+
+            catch(InvalidCastException edgecase)
+            {
+                return (Int32) ((long) value);
+            }
         }
     }
 }

@@ -57,7 +57,8 @@ namespace GameBotGUI
                     (KeyValuePair<String, MacroRecordType>) cbRecordType.SelectedItem;
 
                 if(selection.Value == MacroRecordType.Duration)
-                    numDuration.Value = (Int32) newRecord.GetData()["duration"];
+                    SettingsUtilities.SetNumericUpDownValue(numDuration, newRecord.GetData()["duration"]);
+
                 else
                 {
                     Point point = (Point) newRecord.GetData()["point"];
@@ -113,6 +114,7 @@ namespace GameBotGUI
 
             _okExit = true;
             Close();
+            Dispose();
         }
     }
 }

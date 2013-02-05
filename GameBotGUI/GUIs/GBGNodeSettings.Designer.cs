@@ -154,7 +154,8 @@
             this.cbMouseSpeed.Items.AddRange(new object[] {
             "Slow",
             "Medium",
-            "Fast"});
+            "Fast",
+            "Random"});
             this.cbMouseSpeed.Location = new System.Drawing.Point(94, 299);
             this.cbMouseSpeed.Name = "cbMouseSpeed";
             this.cbMouseSpeed.Size = new System.Drawing.Size(121, 21);

@@ -41,6 +41,7 @@ namespace GameBotGUI
 
             _okExit = true;
             Close();
+            Dispose();
         }
     }
 }

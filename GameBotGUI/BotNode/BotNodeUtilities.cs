@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace GameBotGUI
 {
@@ -13,7 +14,7 @@ namespace GameBotGUI
             {
                 {"name", "(no name)"},
                 {"type", BotNodeType.GenericNode},
-                {"records", new List<MacroRecordBase>()},
+                {"records", new ObservableCollection<MacroRecordBase>()},
                 {"nodeSettings", SettingsUtilities.GenerateDefaultNodeSettingsDictionary() },
                 {"timeSettings", SettingsUtilities.GenerateDefaultTimeSettingsDictionary() }
             };

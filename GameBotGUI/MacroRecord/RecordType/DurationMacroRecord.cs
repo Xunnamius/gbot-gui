@@ -17,5 +17,10 @@ namespace GameBotGUI
         {
             return "-- " + Type.ToString() + " for " + GetData()["duration"].ToString() + " ms --";
         }
+
+        public override object Clone()
+        {
+            return new DurationMacroRecord(GetData());
+        }
     }
 }

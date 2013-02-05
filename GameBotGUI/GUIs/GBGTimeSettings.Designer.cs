@@ -74,7 +74,8 @@
             this.cbEntropy.Items.AddRange(new object[] {
             "Low",
             "Medium",
-            "High"});
+            "High",
+            "Disabled"});
             this.cbEntropy.Location = new System.Drawing.Point(65, 22);
             this.cbEntropy.Name = "cbEntropy";
             this.cbEntropy.Size = new System.Drawing.Size(121, 21);
@@ -93,16 +94,11 @@
             0,
             0,
             0});
-            this.numForcedPause.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.numForcedPause.Name = "numForcedPause";
             this.numForcedPause.Size = new System.Drawing.Size(91, 20);
             this.numForcedPause.TabIndex = 4;
             this.numForcedPause.Value = new decimal(new int[] {
-            5,
+            250,
             0,
             0,
             0});
@@ -112,9 +108,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(193, 132);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 13);
+            this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "seconds";
+            this.label3.Text = "milliseconds";
             // 
             // label4
             // 

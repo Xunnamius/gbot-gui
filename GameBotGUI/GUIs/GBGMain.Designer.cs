@@ -53,7 +53,6 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txbLog = new System.Windows.Forms.TextBox();
-            this.proProgress = new System.Windows.Forms.ProgressBar();
             this.lblCurrentActionLabel = new System.Windows.Forms.Label();
             this.lblCurrentAction = new System.Windows.Forms.Label();
             this.lbNodes = new System.Windows.Forms.ListBox();
@@ -271,17 +270,10 @@
             this.txbLog.TabStop = false;
             this.txbLog.Text = "Welcome to Game Bot, the cheater\'s Graphical User Interface by X0DG";
             // 
-            // proProgress
-            // 
-            this.proProgress.Location = new System.Drawing.Point(0, 318);
-            this.proProgress.Name = "proProgress";
-            this.proProgress.Size = new System.Drawing.Size(623, 23);
-            this.proProgress.TabIndex = 3;
-            // 
             // lblCurrentActionLabel
             // 
             this.lblCurrentActionLabel.AutoSize = true;
-            this.lblCurrentActionLabel.Location = new System.Drawing.Point(13, 299);
+            this.lblCurrentActionLabel.Location = new System.Drawing.Point(13, 307);
             this.lblCurrentActionLabel.Name = "lblCurrentActionLabel";
             this.lblCurrentActionLabel.Size = new System.Drawing.Size(76, 13);
             this.lblCurrentActionLabel.TabIndex = 4;
@@ -291,7 +283,7 @@
             // 
             this.lblCurrentAction.AutoSize = true;
             this.lblCurrentAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrentAction.Location = new System.Drawing.Point(95, 299);
+            this.lblCurrentAction.Location = new System.Drawing.Point(95, 307);
             this.lblCurrentAction.Name = "lblCurrentAction";
             this.lblCurrentAction.Size = new System.Drawing.Size(130, 13);
             this.lblCurrentAction.TabIndex = 5;
@@ -305,6 +297,7 @@
             this.lbNodes.ScrollAlwaysVisible = true;
             this.lbNodes.Size = new System.Drawing.Size(302, 121);
             this.lbNodes.TabIndex = 6;
+            this.lbNodes.SelectedIndexChanged += new System.EventHandler(this.lbNodes_SelectedIndexChanged);
             // 
             // cbProfileSelector
             // 
@@ -345,6 +338,7 @@
             this.btnDuplicateNode.TabIndex = 5;
             this.btnDuplicateNode.Text = "Duplicate Node";
             this.btnDuplicateNode.UseVisualStyleBackColor = true;
+            this.btnDuplicateNode.Click += new System.EventHandler(this.btnDuplicateNode_Click);
             // 
             // btnDestroyNode
             // 
@@ -355,6 +349,7 @@
             this.btnDestroyNode.TabIndex = 7;
             this.btnDestroyNode.Text = "Destroy Node";
             this.btnDestroyNode.UseVisualStyleBackColor = true;
+            this.btnDestroyNode.Click += new System.EventHandler(this.btnDestroyNode_Click);
             // 
             // btnModifyNode
             // 
@@ -365,6 +360,7 @@
             this.btnModifyNode.TabIndex = 6;
             this.btnModifyNode.Text = "Modify Node";
             this.btnModifyNode.UseVisualStyleBackColor = true;
+            this.btnModifyNode.Click += new System.EventHandler(this.btnModifyNode_Click);
             // 
             // btnStopBot
             // 
@@ -373,7 +369,7 @@
             this.btnStopBot.Name = "btnStopBot";
             this.btnStopBot.Size = new System.Drawing.Size(269, 23);
             this.btnStopBot.TabIndex = 3;
-            this.btnStopBot.Text = "Stop Bot (press any key)";
+            this.btnStopBot.Text = "Stop Bot (ctrl+alt+F12)";
             this.btnStopBot.UseVisualStyleBackColor = true;
             this.btnStopBot.Click += new System.EventHandler(this.btnStopBot_Click);
             // 
@@ -384,7 +380,7 @@
             this.btnRunBot.Name = "btnRunBot";
             this.btnRunBot.Size = new System.Drawing.Size(269, 23);
             this.btnRunBot.TabIndex = 2;
-            this.btnRunBot.Text = "Run Bot";
+            this.btnRunBot.Text = "Run Bot  (ctrl+alt+F12)";
             this.btnRunBot.UseVisualStyleBackColor = true;
             this.btnRunBot.Click += new System.EventHandler(this.btnRunBot_Click);
             // 
@@ -423,7 +419,7 @@
             this.lblNodeCount.Name = "lblNodeCount";
             this.lblNodeCount.Size = new System.Drawing.Size(150, 13);
             this.lblNodeCount.TabIndex = 10;
-            this.lblNodeCount.Text = "loading...";
+            this.lblNodeCount.Text = " loading...";
             // 
             // lblTotalRuns
             // 
@@ -522,6 +518,7 @@
             this.btnMoveNodeDown.TabIndex = 9;
             this.btnMoveNodeDown.Text = "Move Node Down";
             this.btnMoveNodeDown.UseVisualStyleBackColor = true;
+            this.btnMoveNodeDown.Click += new System.EventHandler(this.btnMoveNodeDown_Click);
             // 
             // btnMoveNodeUp
             // 
@@ -532,6 +529,7 @@
             this.btnMoveNodeUp.TabIndex = 8;
             this.btnMoveNodeUp.Text = "Move Node Up";
             this.btnMoveNodeUp.UseVisualStyleBackColor = true;
+            this.btnMoveNodeUp.Click += new System.EventHandler(this.btnMoveNodeUp_Click);
             // 
             // trayNotif
             // 
@@ -559,7 +557,6 @@
             this.Controls.Add(this.lbNodes);
             this.Controls.Add(this.lblCurrentAction);
             this.Controls.Add(this.lblCurrentActionLabel);
-            this.Controls.Add(this.proProgress);
             this.Controls.Add(this.txbLog);
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.menuStripMain);
@@ -607,7 +604,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.TextBox txbLog;
-        private System.Windows.Forms.ProgressBar proProgress;
         private System.Windows.Forms.Label lblCurrentActionLabel;
         private System.Windows.Forms.Label lblCurrentAction;
         private System.Windows.Forms.ListBox lbNodes;

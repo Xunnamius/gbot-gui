@@ -114,6 +114,7 @@
       <DependentUpon>GBGTimeSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIs\SettingsUtilities.cs" />
+    <Compile Include="Hotkey.cs" />
     <Compile Include="MacroRecord\MacroRecordType.cs" />
     <Compile Include="MacroRecord\RecordType\ClickMacroRecord.cs" />
     <Compile Include="BotNode\NodeType\ClickNode.cs" />

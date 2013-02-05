@@ -142,7 +142,7 @@
             // 
             this.numDuration.Location = new System.Drawing.Point(51, 65);
             this.numDuration.Maximum = new decimal(new int[] {
-            999999999,
+            999999,
             0,
             0,
             0});

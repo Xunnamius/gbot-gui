@@ -1,0 +1,833 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ori",
+				"origOnClose"
+			],
+			[
+				"ViewCo",
+				"ViewControllerService"
+			],
+			[
+				"dictapi",
+				"dictionaryAPI"
+			],
+			[
+				"size",
+				"sizeuprows"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n;;                               X0DG                            ;;\n;;             Game Bot with a Graphical User Interface          ;;\n;;                                                               ;;\n;;     CC: Attribution-NonCommercial-ShareAlike 3.0 Unported     ;;\n;;       http://creativecommons.org/licenses/by-nc-sa/3.0/       ;;\n;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n\n#NoEnv\n#Warn All, OutputDebug\n#SingleInstance\n\nAutoTrim On\nSetWorkingDir %A_ScriptDir%\n\n; Create the sub-menus for the menu bar:\nMenu, FileMenu, Add, &New, FileNew\nMenu, FileMenu, Add, &Open, FileOpen\nMenu, FileMenu, Add, &Save, FileSave\nMenu, FileMenu, Add, Save &As, FileSaveAs\nMenu, FileMenu, Add  ; Separator line.\nMenu, FileMenu, Add, E&xit, FileExit\nMenu, HelpMenu, Add, &About, HelpAbout\n\n; Create the menu bar by attaching the sub-menus to it:\nMenu, MyMenuBar, Add, &File, :FileMenu\nMenu, MyMenuBar, Add, &Help, :HelpMenu\n\n; Attach the menu bar to the window:\nGui, Menu, MyMenuBar\n\n; Create the main Edit control and display the window:\nGui, +Resize  ; Make the window resizable.\nGui, Add, Edit, vMainEdit WantTab W600 R20\nGui, Show,, Untitled\nCurrentFileName =  ; Indicate that there is no current file.\nreturn\n\nFileNew:\nGuiControl,, MainEdit  ; Clear the Edit control.\nreturn\n\nFileOpen:\nGui +OwnDialogs  ; Force the user to dismiss the FileSelectFile dialog before returning to the main window.\nFileSelectFile, SelectedFileName, 3,, Open File, Text Documents (*.txt)\nif SelectedFileName =  ; No file selected.\n    return\nGosub FileRead\nreturn\n\nFileRead:  ; Caller has set the variable SelectedFileName for us.\nFileRead, MainEdit, %SelectedFileName%  ; Read the file's contents into the variable.\nif ErrorLevel\n{\n    MsgBox Could not open \"%SelectedFileName%\".\n    return\n}\nGuiControl,, MainEdit, %MainEdit%  ; Put the text into the control.\nCurrentFileName = %SelectedFileName%\nGui, Show,, %CurrentFileName%   ; Show file name in title bar.\nreturn\n\nFileSave:\nif CurrentFileName =   ; No filename selected yet, so do Save-As instead.\n    Goto FileSaveAs\nGosub SaveCurrentFile\nreturn\n\nFileSaveAs:\nGui +OwnDialogs  ; Force the user to dismiss the FileSelectFile dialog before returning to the main window.\nFileSelectFile, SelectedFileName, S16,, Save File, Text Documents (*.txt)\nif SelectedFileName =  ; No file selected.\n    return\nCurrentFileName = %SelectedFileName%\nGosub SaveCurrentFile\nreturn\n\nSaveCurrentFile:  ; Caller has ensured that CurrentFileName is not blank.\nIfExist %CurrentFileName%\n{\n    FileDelete %CurrentFileName%\n    if ErrorLevel\n    {\n        MsgBox The attempt to overwrite \"%CurrentFileName%\" failed.\n        return\n    }\n}\nGuiControlGet, MainEdit  ; Retrieve the contents of the Edit control.\nFileAppend, %MainEdit%, %CurrentFileName%  ; Save the contents to the file.\n; Upon success, Show file name in title bar (in case we were called by FileSaveAs):\nGui, Show,, %CurrentFileName%\nreturn\n\nHelpAbout:\nGui, 2:+owner1  ; Make the main window (Gui #1) the owner of the \"about box\" (Gui #2).\nGui +Disabled  ; Disable main window.\nGui, 2:Add, Text,, Text for about box.\nGui, 2:Add, Button, Default, OK\nGui, 2:Show\nreturn\n\n2ButtonOK:  ; This section is used by the \"about box\" above.\n2GuiClose:\n2GuiEscape:\nGui, 1:-Disabled  ; Re-enable the main window (must be done prior to the next step).\nGui Destroy  ; Destroy the about box.\nreturn\n\nGuiDropFiles:  ; Support drag & drop.\nLoop, parse, A_GuiEvent, `n\n{\n    SelectedFileName = %A_LoopField%  ; Get the first file only (in case there's more than one).\n    break\n}\nGosub FileRead\nreturn\n\nGuiSize:\nif ErrorLevel = 1  ; The window has been minimized.  No action needed.\n    return\n; Otherwise, the window has been resized or maximized. Resize the Edit control to match.\nNewWidth := A_GuiWidth - 20\nNewHeight := A_GuiHeight - 20\nGuiControl, Move, MainEdit, W%NewWidth% H%NewHeight%\nreturn\n\nFileExit:     ; User chose \"Exit\" from the File menu.\nGuiClose:  ; User closed the window.\nExitApp\n\n; Use this before/after sending keystrokes\n; if A_OSType <> WIN32_WINDOWS ; i.e. it's not Windows 9x.\n; 	BlockInput On\n; BlockInput Off\n\n; Use `ExitApp` to close the program\n",
+			"file": "GBotGUI-core.ahk",
+			"file_size": 4492,
+			"file_write_time": 130043638478726935,
+			"settings":
+			{
+				"buffer_size": 4354,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 127.0,
+		"selected_items":
+		[
+			[
+				"mini",
+				"View: Toggle Minimap"
+			],
+			[
+				"lint",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"min",
+				"View: Toggle Minimap"
+			],
+			[
+				"php",
+				"Set Syntax: PHP"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"upper",
+				"Convert Case: Upper Case"
+			],
+			[
+				"fetch",
+				"Fetch: Package"
+			],
+			[
+				"wrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"minim",
+				"View: Toggle Minimap"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"lint list",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"dis",
+				"SublimeLinter: Disable Linting"
+			],
+			[
+				"disabl",
+				"SublimeLinter: Disable Linting"
+			],
+			[
+				"disa",
+				"SublimeLinter: Disable Linting"
+			],
+			[
+				"disable",
+				"SublimeLinter: Disable Linting"
+			],
+			[
+				"linter",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"subl",
+				"SublimeLinter: Extract Annotations"
+			],
+			[
+				"project",
+				"Project: Save As"
+			],
+			[
+				"ss apa",
+				"Set Syntax: Apache Conf"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"apach",
+				"Set Syntax: Apache Conf"
+			],
+			[
+				"user",
+				"Preferences: Settings - User"
+			],
+			[
+				"pref",
+				"Preferences: Settings - Default"
+			],
+			[
+				"less",
+				"Set Syntax: LESS"
+			],
+			[
+				"css",
+				"Set Syntax: CSS"
+			],
+			[
+				"plain",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"javascr",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings - Default"
+			],
+			[
+				"key ",
+				"Preferences: Key Bindings - Default"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"package control",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"prefere defa",
+				"Preferences: Settings - Default"
+			],
+			[
+				"prefer",
+				"Preferences: Settings - User"
+			],
+			[
+				"prefere packa defa",
+				"Preferences: Package Control Settings – Default"
+			],
+			[
+				"pack control",
+				"Preferences: Package Control Settings – User"
+			],
+			[
+				"add repo",
+				"Package Control: Add Repository"
+			],
+			[
+				"ph",
+				"Set Syntax: PHP"
+			],
+			[
+				"packag",
+				"Package Control: Add Repository"
+			],
+			[
+				"javascript",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"snippet",
+				"Snippet: Function"
+			],
+			[
+				"prefere",
+				"Preferences: Settings - Default"
+			],
+			[
+				"preferences",
+				"Preferences: Settings - User"
+			],
+			[
+				"install package",
+				"Package Control: Install Package"
+			],
+			[
+				"minimap",
+				"View: Toggle Minimap"
+			],
+			[
+				"sidebar",
+				"View: Toggle Side Bar"
+			],
+			[
+				"markdown",
+				"Set Syntax: Markdown"
+			],
+			[
+				"syntax markd",
+				"Set Syntax: Markdown"
+			],
+			[
+				"s s javascript",
+				"Set Syntax: JavaScript"
+			]
+		],
+		"width": 512.0
+	},
+	"console":
+	{
+		"height": 200.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/E/Shell Folders/Documents/AutoHotkey.ahk",
+		"/E/GitHub/GBotGUI/.gitattributes",
+		"/E/GitHub/GBotGUI/.gitignore",
+		"/E/GitHub/HashNav/Source/HashNav/HashNav.js",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Poppable.js",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/E/Dev/utilities.user.js",
+		"/C/Users/Xunnamius/AppData/Local/Temp/fz3temp-1/local.config.php",
+		"/C/Users/Xunnamius/AppData/Local/Temp/fz3temp-1/.htaccess",
+		"/E/Dev/webroot/public_html/projects/wordwise/.git-ftp-ignore",
+		"/E/Dev/~github/html5-boilerplate/.git-ftp-ignore",
+		"/E/Dev/servers/stepsbystephens.dev/public_html/.git-ftp-ignore",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Mookit/Type/Function/chain.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Mookit/Type/Function/wrap.js",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/AdvancedNewFile/Default (Windows).sublime-keymap",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/User/Emmet.sublime-settings",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/Emmet/Emmet.sublime-settings",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/User/Side Bar.sublime-settings",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/SideBarEnhancements/Default (Windows).sublime-keymap",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/User/SublimeLinter.sublime-settings",
+		"/C/Users/Xunnamius/AppData/Roaming/Sublime Text 2/Packages/SublimeLinter/Default (Windows).sublime-keymap",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/BadFunctionCallError.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/BadMethodCallError.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/DomainError.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/InvalidArgumentError.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/LengthError.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/RangeError.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/UnexpectedValueError.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/LogicalError.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/LogicalException.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/Exception.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable/Exception/LogicalException.class.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/js/Poppable.class.js",
+		"/E/Dev/webroot/public_html/projects/wordwise/api.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/WordwiseAPI.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/tests/wordwiseTest/apiTest.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/NotRegisteredException.php",
+		"/E/Freelance/The Process.txt",
+		"/E/Freelance/[DG] Client Contracts/Template/~Invoice ID System Explained.txt",
+		"/C/Users/Xunnamius/AppData/Local/Temp/fz3temp-1/index.html",
+		"/C/Users/Xunnamius/AppData/Local/Temp/fz3temp-1/.git-ftp.log",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/MySQLDriver.php",
+		"/C/Users/Xunnamius/AppData/Local/Temp/fz3temp-1/~devkey.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/CambridgeDictionary.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/ADictionary.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/Exception/MySQLDriverException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/Exception/MySQLDriverConnectException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/config/local.config.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/ListAlreadyAddedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/Exception/MySQLDriverQueryException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/JSONAPIException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/WordNotFoundViaAPIException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/ListNameTooLongException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/ListNameTooShortException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/UserTimeoutException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/WordAlreadyAddedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/WordTooLongException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/WordTooShortException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/wordwise.sublime-workspace",
+		"/E/Dev/webroot/public_html/projects/wordwise/autoload.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/Exception/APIExternalException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/Exception/APIWordNotFoundException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/Exception/CURLAllowURLFOpenException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/AlreadyAuthenticatedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/BadAuthenticationException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/BadRequestException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/BadResponseException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/BadTokenException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/EmailNotFoundException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/EmailTakenException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/ExternalException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/ForbiddenException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/InternalException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/ListNotFoundException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/ListProtectedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/NotAuthenticatedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/NotImplementedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/PossibleSessionCollisionException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/ResetKeyNotFoundException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/SessionMismatchException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/SQLException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/SQLPossibleUniqueIndexCollision.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/UnhandledException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/UnknownActionException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/UserBannedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/UsernameTakenException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exception/WordNotFoundException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/SQLFactory.php",
+		"/C/Users/Xunnamius/GitHub/~dev/logs/webroot/access.log",
+		"/C/Users/Xunnamius/GitHub/~dev/logs/webroot/error.log",
+		"/C/Users/Xunnamius/GitHub/~dev/logs/webroot/rw.log",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/Exception/SQLDriverNotFoundException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/Exception/BadSQLDriverException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/.htaccess",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/ViewController/ViewController.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/ErrorHandler/DeveloperErrorHandler.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/DictionaryDotComDictionary.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/MySQLDriverResultSet.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/MySQLDriverRowSet.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/MySQLDriverRow.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/Iterator/ReadOnlyArrayIterator.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/less/Bootstrap/alerts.less",
+		"/C/Users/Xunnamius/AppData/Local/Temp/fz3temp-1/WordwiseAPI.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/ViewController/ViewControllerService.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/Strings/STR.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/Exception/MySQLDriverException",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/vendor/Darktools/SQL/MySQL.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/Dictionaries/CambridgeDictionary.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/Dictionaries/DictionaryDotComDictionary.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/Dictionary.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/Exception/ExternalAPIException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Dictionary/Exception/CURLAllowURFFOpenException",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Result.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/ListNameTooLongException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/ListNameTooShortException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/UserTimeoutException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/WordAlreadyAddedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/WordNotFoundViaAPIException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/WordTooLongException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/WordTooShortException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/WordNotFoundException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/ListAlreadyAddedException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/JSONAPIException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/PossibleSessionCollisionException.php",
+		"/E/Dev/webroot/public_html/projects/wordwise/assets/src/php/Wordwise/Exceptions/BadRequestException.php"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"E:\\Dev\\webroot\\public_html\\projects\\wordwise",
+			"E:\\Dev\\webroot\\public_html\\projects\\wordwise\\assets\\src\\php\\Wordwise\\Exception",
+			"",
+			"E:\\Dev\\webroot\\public_html\\projects\\wordwise\\assets\\src\\php\\Wordwise\\Exception",
+			"<open files>",
+			"E:\\Dev\\webroot\\public_html\\projects\\wordwise\\assets\\src\\php\\Wordwise\\Exceptions"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"session",
+			".hooks",
+			"navchange",
+			"observers",
+			"updateRemote",
+			"observers",
+			"10.1.30.69",
+			"div",
+			"defaultListId",
+			"getDefaultListId",
+			"response",
+			"getListCon",
+			"getDefaultListId",
+			"_updateDefaultListId",
+			"getLists",
+			"fetchRandom",
+			"better aol",
+			"01092013172112",
+			"console",
+			"key",
+			"setOptions",
+			"elements.modals.(\\w+).setOptions",
+			"_delete",
+			"VIEW.mask.hide",
+			".wrap",
+			"origOnClose",
+			"onClose",
+			"onclose",
+			"OnClose",
+			"onClose",
+			"onclose",
+			"onClose",
+			"onclose",
+			"hide",
+			"pop_",
+			"pop_overlay",
+			"isPopped",
+			"pop absolute-center",
+			"classStatusDefault",
+			"unpopAll",
+			" hide",
+			"pop_",
+			"elements.modals.success",
+			"handler2",
+			"onClose",
+			"APISuccess",
+			"ctrl+shift+m",
+			"$('pop_loading')",
+			"poppables",
+			"VIEW.clearPopped();",
+			"clearPopped",
+			"Function.from()",
+			"fireEvent",
+			"Function",
+			"onUser",
+			" '",
+			"this.elements.content",
+			"Ok",
+			"this.element",
+			"classHookIgnore",
+			"Close",
+			"close",
+			"classHook2Class",
+			"(),\n",
+			"',\n",
+			"Pop",
+			"window.console && window.console.error",
+			"bind(this)",
+			"Before",
+			"LogicalException",
+			"hooks.myL",
+			"todo",
+			"(\\$(?!\\$)|\\$\\$)",
+			"$$('#state_listContents ._",
+			"hook(?!s)(\\.|$)",
+			"this.getElement('._",
+			"stateMain",
+			"(?<!_)divtarget",
+			"divtarget",
+			"._myLists",
+			"$$('#state_main ._mylists')",
+			"')",
+			"'),",
+			"this.getElement('._",
+			".login",
+			".buttons",
+			"buttons",
+			"(?<!\\w)_",
+			"(^|\\s)_",
+			"=\"",
+			"buttons",
+			"btn",
+			"(\\$(?!\\$))|(\\$\\$)",
+			"$",
+			".pop",
+			"_back",
+			"__get",
+			"debug",
+			"SQL",
+			"SQLFactory",
+			"MySQLdb",
+			"db",
+			"$this->apipath",
+			"protected function composeMessage($msgData)\n	{\n		$this->message = sprintf($this->message",
+			"\\* @(?!group)",
+			"$word",
+			"public function test",
+			"\\$this->(.*?)\\((\\s*\\n*\\s*)'(?!ok)(\\w)(.*?)'",
+			"\\$this->(.*?)\\((\\s*\\n*\\s*)'(?!ok)(.)(.*?)'",
+			"\\$this->(.*?)\\((\\s*\\n*\\s*)'(.)(.*?)'",
+			"$this->(.*?)\\((\\s*\\n*\\s*)'(.)(.*?)'",
+			"\\$this->AssertErrorResponseIsType\\((\\s*\\n*\\s*.*?\\s*\\n*\\s*)'(.)(.*?)'",
+			"Exception",
+			"StringException",
+			"AssertErrorResponseIsType",
+			"\\$this->AssertErrorResponseIsType\\((\\s*\\n*\\s*.*?\\s*\\n*\\s*)'(.)(.*?)'",
+			"(.*?)\\((\\s*\\n*\\s*)'(.)(.*?)'",
+			"\\$this->AssertNotEquals\\((\\s*\\n*\\s*)'(.)(.*?)'",
+			", Exception ",
+			"WordwiseAPI::",
+			"DEH",
+			"--------------",
+			"------------",
+			"assets/",
+			"throw",
+			"MySQLDriverQueryException",
+			"MySQLDriverException",
+			"throw"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"elements.modals.$1.setEvents",
+			"popback_overlay",
+			"protected function composeMessage($msg, $msgData)\n	{\n		return sprintf($msg",
+			"\\$this->AssertErrorResponseIsType\\($1'\\u$2$3Exception'",
+			"\\$this->$1\\($2'\\u$3$4Exception'",
+			"\\$this->AssertErrorResponseIsType\\($1'\\u$2$3Exception'",
+			"",
+			"\\$this->AssertErrorResponseIsType\\($1'\\u$2$3Exception'",
+			"$1\\($2'\\u$3$4Exception'",
+			"\\$this->AssertNotEquals\\($1'\\u$2$3Exception'",
+			", ",
+			"",
+			"Exception",
+			"MySQL",
+			"",
+			"namespace src\\Wordwise\\Exception;",
+			"namespace src\\Dictionary\\Exception;",
+			"$code=0, Exception $previous=null",
+			"return $this->stdout",
+			"throw new Exception\\\\\\u$1$2Exception();",
+			"",
+			"extends JSONAPIException\n{\n	public function __construct(Array $errorData=null, Array $msgData=null, $code=0, $previous=null)\n	{\n		parent::__construct(\n			'',\n			$errorData,\n			$msgData,\n			$code,\n			$previous);\n	}\n\n	protected function composeMessage($msgData)\n	{\n\n	}\n}",
+			"extends JSONAPIException\n{\n	public function __construct(Array $errorData=null, $code=0, $previous=null)\n	{\n		parent::__construct(\n			'',\n			$errorData,\n			null,\n			$code,\n			$previous);\n	}\n}",
+			"find_all_under",
+			"},\n",
+			"\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Sat\", \"Sun\""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "GBotGUI-core.ahk",
+					"settings":
+					{
+						"buffer_size": 4354,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								931,
+								931
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								" TODO:",
+								" README:",
+								" FIXME:",
+								" XXX:"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"boss": true,
+								"browser": true,
+								"eqnull": true,
+								"evil": false,
+								"expr": true,
+								"forin": true,
+								"immed": false,
+								"latedef": true,
+								"laxbreak": true,
+								"mootools": true,
+								"newcap": true,
+								"noarg": true,
+								"nonstandard": true,
+								"regexdash": true,
+								"smarttabs": true,
+								"sub": true,
+								"trailing": true,
+								"undef": true,
+								"unused": false
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 1.5,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+								"php": "C:\\Program Files (x86)\\PHP\\php.exe"
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "fill",
+							"sublimelinter_notes": true,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"hta",
+				".htaccess"
+			],
+			[
+				".js",
+				"assets/js/global.js"
+			],
+			[
+				"index",
+				"index.html"
+			],
+			[
+				"-glo",
+				"assets/less/boot-global.less"
+			],
+			[
+				"word",
+				"assets/classes/WordwiseAPI.php"
+			],
+			[
+				"unti",
+				"untitled"
+			],
+			[
+				"untit",
+				"untitled"
+			],
+			[
+				"in",
+				"index.php"
+			],
+			[
+				"dec",
+				"decorator.inc"
+			],
+			[
+				"unt",
+				"untitled"
+			],
+			[
+				"ut",
+				"utility.inc"
+			],
+			[
+				"fact",
+				"fact.inc"
+			],
+			[
+				"sta",
+				"strategy.inc"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"dp",
+				"/E/Dev/webroot/public_html/projects/dp/dp.sublime-project"
+			],
+			[
+				"zf",
+				"/E/Dev/webroot/public_html/projects/zf2dev/zf2dev.sublime-project"
+			],
+			[
+				"",
+				"/E/Dev/webroot/public_html/projects/zf2dev/zf2dev.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 241.0,
+	"status_bar_visible": true
+}

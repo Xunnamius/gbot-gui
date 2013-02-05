@@ -17,5 +17,10 @@ namespace GameBotGUI
         {
             return Type.ToString() + " @ " + GetData()["point"].ToString();
         }
+
+        public override object Clone()
+        {
+            return new ClickMacroRecord(GetData(), Type);
+        }
     }
 }
