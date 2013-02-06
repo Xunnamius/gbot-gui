@@ -194,6 +194,7 @@ namespace GameBotGUI
                 itr = 0;
                 EnableInitialRunControls();
                 lbNodes.Enabled = true;
+                btnCreateNode.Enabled = true;
                 runBotToolStripMenuItem.Text = "Run Bot";
 
                 if(!(e.Error == null))
