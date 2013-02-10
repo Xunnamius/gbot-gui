@@ -3,7 +3,7 @@ GBotGUI
 
 A bot for online graphical MMOs that doesn't depend on AutoHotKey! Comes complete with its own set of tools and GUI for easy use.
 
-It's actually pretty badass. I've seen people pay money for less.
+It's actually pretty badass (OO, extensible, maintainable). I've seen people pay money for less.
 
 Check it out :P
 
