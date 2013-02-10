@@ -7,6 +7,6 @@ It's actually pretty badass (OO, extensible, maintainable). I've seen people pay
 
 Check it out :P
 
-Not made for any specific game. My account name (Xunnamius) and all related information are mine alone, and anyone else on the net bearing the same account name or information is by pure coincidence, as we are probably not the same person. Don't try to be a hero.
+Not made for any specific game. My account name (Xunnamius) and all related information are mine alone, and anyone else on the net bearing the same account name or information is by pure coincidence alone, as we are probably not the same person. Don't try to be a hero, it doesn't suit you.
 
-Please report any bugs you find to the Issues page.
+Please report any bugs you find to the Issues page. Thanks and enjoy!
