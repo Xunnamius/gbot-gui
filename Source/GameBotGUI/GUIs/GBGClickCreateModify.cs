@@ -26,7 +26,7 @@ namespace GameBotGUI
         public Boolean OkExit { get { return _okExit; } }
 
         protected Boolean inCreateMode;
-        internal ObservableCollection<MacroRecordBase> Records = new ObservableCollection<MacroRecordBase>();
+        internal ObservableCollection<RecordBase> Records = new ObservableCollection<RecordBase>();
 
         public GBGClickCreateModify(GBGMain parent)
         {
@@ -34,8 +34,8 @@ namespace GameBotGUI
             this.parent = parent;
             inCreateMode = false;
 
-            nodeSettings = SettingsUtilities.GenerateDefaultNodeSettingsDictionary();
-            timeSettings = SettingsUtilities.GenerateDefaultTimeSettingsDictionary();
+            nodeSettings = GUIUtilities.GenerateDefaultNodeSettingsDictionary();
+            timeSettings = GUIUtilities.GenerateDefaultTimeSettingsDictionary();
         }
 
         public GBGClickCreateModify(GBGMain mainForm, ClickNode clickNode)
@@ -45,7 +45,7 @@ namespace GameBotGUI
             inCreateMode = true;
 
             txbName.Text = clickNode.Name;
-            Records = (ObservableCollection<MacroRecordBase>) clickNode.GetOption("records");
+            Records = (ObservableCollection<RecordBase>) clickNode.GetOption("records");
             nodeSettings = new Dictionary<string, object>((Dictionary<string, object>) clickNode.GetOption("nodeSettings"));
             timeSettings = new Dictionary<string, object>((Dictionary<string, object>) clickNode.GetOption("timeSettings"));
         }
@@ -76,7 +76,7 @@ namespace GameBotGUI
 
                 object ndx = lbRecords.SelectedItem;
                 lbRecords.Items.Clear();
-                lbRecords.Items.AddRange(Records.ToArray<MacroRecordBase>());
+                lbRecords.Items.AddRange(Records.ToArray<RecordBase>());
 
                 try { lbRecords.SelectedItem = ndx; }
                 catch(Exception ignore) { }
@@ -106,7 +106,7 @@ namespace GameBotGUI
 
         private void btnDeleteRecord_Click(object sender, EventArgs e)
         {
-            Records.Remove((MacroRecordBase) lbRecords.SelectedItem);
+            Records.Remove((RecordBase) lbRecords.SelectedItem);
 
             btnModifyRecord.Enabled = false;
             btnMoveUp.Enabled = false;
@@ -116,7 +116,7 @@ namespace GameBotGUI
 
         private void btnMoveUp_Click(object sender, EventArgs e)
         {
-            MacroRecordBase record2, record1 = (MacroRecordBase) lbRecords.SelectedItem;
+            RecordBase record2, record1 = (RecordBase) lbRecords.SelectedItem;
             int ndx1 = Records.IndexOf(record1);
             int ndx2 = ndx1 - 1;
 
@@ -134,7 +134,7 @@ namespace GameBotGUI
 
         private void btnMoveDown_Click(object sender, EventArgs e)
         {
-            MacroRecordBase record2, record1 = (MacroRecordBase) lbRecords.SelectedItem;
+            RecordBase record2, record1 = (RecordBase) lbRecords.SelectedItem;
             int ndx1 = Records.IndexOf(record1);
             int ndx2 = ndx1 + 1;
 
@@ -198,20 +198,20 @@ namespace GameBotGUI
         {
             if(mouseTracking == 2)
             {
-                MacroRecordType clickType = MacroRecordType.NoClick;
+                ClickRecordType clickType = ClickRecordType.NoClick;
 
                 switch(e.Button)
                 {
                     case MouseButtons.Left:
-                        clickType = MacroRecordType.LeftClick;
+                        clickType = ClickRecordType.LeftClick;
                         break;
 
                     case MouseButtons.Middle:
-                        clickType = MacroRecordType.MiddleClick;
+                        clickType = ClickRecordType.MiddleClick;
                         break;
 
                     case MouseButtons.Right:
-                        clickType = MacroRecordType.RightClick;
+                        clickType = ClickRecordType.RightClick;
                         break;
                 }
 
@@ -262,9 +262,9 @@ namespace GameBotGUI
             if(txbName.Text.Length > 0)
             {
                 generatedNode = new ClickNode(txbName.Text.Length > 0 ? txbName.Text : null);
-                generatedNode.SetOption("records", MacroRecordBase.DeepCopy(Records));
-                generatedNode.SetOption("nodeSettings", nodeSettings.ToDictionary(entry => entry.Key, entry => entry.Value));
-                generatedNode.SetOption("timeSettings", timeSettings.ToDictionary(entry => entry.Key, entry => entry.Value));
+                generatedNode.SetOption("records", RecordBase.DeepCopy(Records));
+                generatedNode.SetOption("nodeSettings", nodeSettings.ToDictionary(e => e.Key, e => e.Value));
+                generatedNode.SetOption("timeSettings", timeSettings.ToDictionary(e => e.Key, e => e.Value));
 
                 _okExit = true;
                 Close();
@@ -276,7 +276,7 @@ namespace GameBotGUI
         private void btnModifyRecord_Click(object sender, EventArgs e)
         {
             int ndx = lbRecords.SelectedIndex;
-            MacroRecordBase record = (MacroRecordBase) lbRecords.SelectedItem;
+            RecordBase record = (RecordBase) lbRecords.SelectedItem;
             
 
             using(GBGClickAddModifyRecord modForm = new GBGClickAddModifyRecord(record))
@@ -284,7 +284,7 @@ namespace GameBotGUI
                 modForm.ShowDialog(this);
                 if(modForm.OkExit)
                 {
-                    MacroRecordBase gen = modForm.GetGeneratedRecord();
+                    RecordBase gen = modForm.GetGeneratedRecord();
 
                     Records.RemoveAt(ndx);
                     Records.Insert(ndx, gen);
@@ -303,7 +303,7 @@ namespace GameBotGUI
                 modForm.ShowDialog(this);
                 if(modForm.OkExit)
                 {
-                    MacroRecordBase mac = modForm.GetGeneratedRecord();
+                    RecordBase mac = modForm.GetGeneratedRecord();
 
                     if(lbRecords.SelectedIndex >= 0)
                         Records.Insert(lbRecords.SelectedIndex+1, mac);

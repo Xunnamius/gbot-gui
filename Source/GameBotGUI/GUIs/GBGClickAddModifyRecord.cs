@@ -11,7 +11,7 @@ namespace GameBotGUI
 {
     internal partial class GBGClickAddModifyRecord : Form
     {
-        MacroRecordBase newRecord = null;
+        RecordBase newRecord = null;
 
         private Boolean _okExit = false;
         public Boolean OkExit { get { return _okExit; } }
@@ -21,7 +21,7 @@ namespace GameBotGUI
             InitializeComponent();
         }
 
-        public GBGClickAddModifyRecord(MacroRecordBase record)
+        public GBGClickAddModifyRecord(RecordBase record)
         {
             InitializeComponent();
             newRecord = record;
@@ -32,15 +32,15 @@ namespace GameBotGUI
             cbRecordType.DisplayMember = "Key";
             cbRecordType.ValueMember = "Value";
 
-            foreach(MacroRecordType recordType in Enum.GetValues(typeof(MacroRecordType)))
-                cbRecordType.Items.Add(new KeyValuePair<String, MacroRecordType>(recordType.ToString(), recordType));
+            foreach(ClickRecordType recordType in Enum.GetValues(typeof(ClickRecordType)))
+                cbRecordType.Items.Add(new KeyValuePair<String, ClickRecordType>(recordType.ToString(), recordType));
 
             cbRecordType.SelectedIndexChanged += new EventHandler((sendr, evtargs) =>
             {
-                KeyValuePair<String, MacroRecordType> selection =
-                    (KeyValuePair<String, MacroRecordType>) cbRecordType.SelectedItem;
+                KeyValuePair<String, ClickRecordType> selection =
+                    (KeyValuePair<String, ClickRecordType>) cbRecordType.SelectedItem;
 
-                if(selection.Value == MacroRecordType.Duration)
+                if(selection.Value == ClickRecordType.Duration)
                     showMS();
                 else
                     showXY();
@@ -53,11 +53,11 @@ namespace GameBotGUI
                 Text = "Modify a record";
                 cbRecordType.SelectedIndex = (Int32) newRecord.Type;
 
-                KeyValuePair<String, MacroRecordType> selection =
-                    (KeyValuePair<String, MacroRecordType>) cbRecordType.SelectedItem;
+                KeyValuePair<String, ClickRecordType> selection =
+                    (KeyValuePair<String, ClickRecordType>) cbRecordType.SelectedItem;
 
-                if(selection.Value == MacroRecordType.Duration)
-                    SettingsUtilities.SetNumericUpDownValue(numDuration, newRecord.GetData()["duration"]);
+                if(selection.Value == ClickRecordType.Duration)
+                    GUIUtilities.SetNumericUpDownValue(numDuration, newRecord.GetData()["duration"]);
 
                 else
                 {
@@ -70,7 +70,7 @@ namespace GameBotGUI
             else Text = "Add a record";
         }
 
-        public MacroRecordBase GetGeneratedRecord()
+        public RecordBase GetGeneratedRecord()
         {
             return newRecord;
         }
@@ -99,10 +99,10 @@ namespace GameBotGUI
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            KeyValuePair<String, MacroRecordType> selection =
-                    (KeyValuePair<String, MacroRecordType>) cbRecordType.SelectedItem;
+            KeyValuePair<String, ClickRecordType> selection =
+                    (KeyValuePair<String, ClickRecordType>) cbRecordType.SelectedItem;
 
-            if(selection.Value == MacroRecordType.Duration)
+            if(selection.Value == ClickRecordType.Duration)
                 newRecord = new DurationMacroRecord(new Dictionary<string,object>(){ { "duration", (Int32) numDuration.Value } });
             else
             {

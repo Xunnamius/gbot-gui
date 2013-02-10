@@ -31,7 +31,7 @@ namespace GameBotGUI
 
         public Dictionary<String, Object> GetGeneratedSettings()
         {
-            return profileSettings.ToDictionary(entry => entry.Key, entry => entry.Value); ;
+            return profileSettings.ToDictionary(e => e.Key, e => e.Value); ;
         }
 
         // _okExit = true;

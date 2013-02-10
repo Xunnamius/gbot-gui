@@ -26,12 +26,12 @@ namespace GameBotGUI
 
         private void GBGTimeSettings_Load(object sender, EventArgs e)
         {
-            SettingsUtilities.ProcessSettingsData(this, timeSettings);
+            GUIUtilities.ProcessSettingsData(this, timeSettings);
         }
 
         public Dictionary<String, Object> GetGeneratedSettings()
         {
-            return timeSettings.ToDictionary(entry => entry.Key, entry => entry.Value);
+            return timeSettings.ToDictionary(e => e.Key, e => e.Value);
         }
 
         private void btnOk_Click(object sender, EventArgs e)

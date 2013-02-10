@@ -5,10 +5,11 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using GameBotGUI.Record.Types.Click;
 
 namespace GameBotGUI
 {
-    static class MouseController
+    static sealed class MouseController
     {
         private const int MouseEventDelayMS = 2;
         
@@ -45,7 +46,7 @@ namespace GameBotGUI
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint SendInput(uint nInputs, ref INPUT pInputs, int cbSize);
 
-        public static void SmoothClickMouseTo(Point dest, Int32 totalDuration, ClickNodeSubType clickType)
+        public static void SmoothClickMouseTo(Point dest, Int32 totalDuration, ClickRecordType clickType)
         {
             Point start = Cursor.Position;
             PointF iterPoint = start;
@@ -71,7 +72,7 @@ namespace GameBotGUI
             DoClickMouse(clickType);
         }
 
-        private static void DoClickMouse(ClickNodeSubType clickType)
+        public static void DoClickMouse(ClickRecordType clickType)
         {
             INPUT mouseInput = new INPUT()
             {
@@ -81,23 +82,26 @@ namespace GameBotGUI
 
             switch(clickType)
             {
-                case ClickNodeSubType.LeftClick:
+                case ClickRecordType.LeftClick:
                     mouseInput.mi.dwFlags = MouseEventFlags.LeftDown;
                     SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+                    System.Threading.Thread.Sleep(150);
                     mouseInput.mi.dwFlags = MouseEventFlags.LeftUp;
                     SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
                     break;
 
-                case ClickNodeSubType.RightClick:
+                case ClickRecordType.RightClick:
                     mouseInput.mi.dwFlags = MouseEventFlags.RightDown;
                     SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+                    System.Threading.Thread.Sleep(150);
                     mouseInput.mi.dwFlags = MouseEventFlags.RightUp;
                     SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
                     break;
 
-                case ClickNodeSubType.MiddleClick:
+                case ClickRecordType.MiddleClick:
                     mouseInput.mi.dwFlags = MouseEventFlags.MiddleDown;
                     SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+                    System.Threading.Thread.Sleep(150);
                     mouseInput.mi.dwFlags = MouseEventFlags.MiddleUp;
                     SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
                     break;

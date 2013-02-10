@@ -26,19 +26,19 @@ namespace GameBotGUI
 
         private void GBGApplicationSettings_Load(object sender, EventArgs e)
         {
-            SettingsUtilities.ProcessSettingsData(this, applicationSettings);
+            GUIUtilities.ProcessSettingsData(this, applicationSettings);
         }
 
         public Dictionary<String, Object> GetGeneratedSettings()
         {
-            return applicationSettings.ToDictionary(entry => entry.Key, entry => entry.Value);
+            return applicationSettings.ToDictionary(e => e.Key, e => e.Value);
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             applicationSettings["cbInternodeEntropy" ] = cbInternodeEntropy.SelectedIndex;
-            applicationSettings["chbxEnableIntranodeEntropy" ] = SettingsUtilities.CheckState2Int32(chbxEnableIntranodeEntropy.CheckState);
-            applicationSettings["chbxEnableIntranodeForcedPause" ] = SettingsUtilities.CheckState2Int32(chbxEnableIntranodeForcedPause.CheckState);
+            applicationSettings["chbxEnableIntranodeEntropy" ] = GUIUtilities.CheckState2Int32(chbxEnableIntranodeEntropy.CheckState);
+            applicationSettings["chbxEnableIntranodeForcedPause" ] = GUIUtilities.CheckState2Int32(chbxEnableIntranodeForcedPause.CheckState);
             applicationSettings["cbExecutionScheme" ] = cbExecutionScheme.SelectedIndex;
 
             _okExit = true;

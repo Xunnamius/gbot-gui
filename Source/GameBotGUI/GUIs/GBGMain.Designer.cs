@@ -567,6 +567,7 @@
             this.Name = "GBGMain";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Game Bot GUI v";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GBGMain_FormClosing);
             this.Load += new System.EventHandler(this.GBGMain_Load);
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();

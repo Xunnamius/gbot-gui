@@ -26,17 +26,17 @@ namespace GameBotGUI
 
         private void GBGNodeSettings_Load(object sender, EventArgs e)
         {
-            SettingsUtilities.ProcessSettingsData(this, nodeSettings);
+            GUIUtilities.ProcessSettingsData(this, nodeSettings);
         }
 
         public Dictionary<String, Object> GetGeneratedSettings()
         {
-            return nodeSettings.ToDictionary(entry => entry.Key, entry => entry.Value);
+            return nodeSettings.ToDictionary(e => e.Key, e => e.Value);
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            nodeSettings["chbxEnabled"] = SettingsUtilities.CheckState2Int32(chbxEnabled.CheckState);
+            nodeSettings["chbxEnabled"] = GUIUtilities.CheckState2Int32(chbxEnabled.CheckState);
             nodeSettings["cbPriority"] = cbPriority.SelectedIndex;
             nodeSettings["numRepeat"] = (Int32) numRepeat.Value;
             nodeSettings["cbMouseSpeed"] = cbMouseSpeed.SelectedIndex;

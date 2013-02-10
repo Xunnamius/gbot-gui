@@ -19,12 +19,12 @@ namespace GameBotGUI
         
         private ObservableCollection<Profile> Profiles = new ObservableCollection<Profile>();
         private ObservableCollection<GBGBotNode> Nodes = new ObservableCollection<GBGBotNode>();
-        private Dictionary<String, Object> applicationSettings = SettingsUtilities.GenerateDefaultApplicationSettingsDictionary();
-        private Dictionary<String, Object> profileSettings = SettingsUtilities.GenerateDefaultProfileSettingsDictionary();
+        private Dictionary<String, Object> applicationSettings = GUIUtilities.GenerateDefaultApplicationSettingsDictionary();
+        private Dictionary<String, Object> profileSettings = GUIUtilities.GenerateDefaultProfileSettingsDictionary();
         private int itr = 0;
         private BackgroundWorker bgw = new BackgroundWorker();
 
-        private MacroRecordBase activeRecord;
+        private RecordBase activeRecord;
         private int activeRepeats;
         private String activeString;
 
@@ -227,8 +227,8 @@ namespace GameBotGUI
 
                 Dictionary<String, Object> nodeSettings = (Dictionary<String, Object>) node.GetOption("nodeSettings"),
                                             timeSettings = (Dictionary<String, Object>) node.GetOption("timeSettings");
-                ObservableCollection<MacroRecordBase> records =
-                    (ObservableCollection<MacroRecordBase>) node.GetOption("records");
+                ObservableCollection<RecordBase> records =
+                    (ObservableCollection<RecordBase>) node.GetOption("records");
 
                 int repeats = (int) nodeSettings["numRepeat"],
                     forcedPauseTime = (int) timeSettings["numForcedPause"],
@@ -243,7 +243,7 @@ namespace GameBotGUI
                 {
                     while(!bgw.CancellationPending && repeats-- > 0)
                     {
-                        foreach(MacroRecordBase record in records)
+                        foreach(RecordBase record in records)
                         {
                             if(bgw.CancellationPending)
                             {
@@ -260,8 +260,8 @@ namespace GameBotGUI
                                 bgw.ReportProgress(itr * 4 + 1);
                             }
 
-                            if(record.Type == MacroRecordType.Duration)
-                                System.Threading.Thread.Sleep(SettingsUtilities.ToInt32(record.GetData()["duration"]));
+                            if(record.Type == ClickRecordType.Duration)
+                                System.Threading.Thread.Sleep(GUIUtilities.ToInt32(record.GetData()["duration"]));
 
                             else if(record is ClickMacroRecord)
                             {
@@ -270,15 +270,15 @@ namespace GameBotGUI
                                 ClickNodeSubType type = ClickNodeSubType.NoClick;
                                 switch(record.Type)
                                 {
-                                    case MacroRecordType.LeftClick:
+                                    case ClickRecordType.LeftClick:
                                         type = ClickNodeSubType.LeftClick;
                                         break;
 
-                                    case MacroRecordType.MiddleClick:
+                                    case ClickRecordType.MiddleClick:
                                         type = ClickNodeSubType.MiddleClick;
                                         break;
 
-                                    case MacroRecordType.RightClick:
+                                    case ClickRecordType.RightClick:
                                         type = ClickNodeSubType.RightClick;
                                         break;
                                 }
@@ -631,6 +631,11 @@ namespace GameBotGUI
                 btnMoveNodeUp.Enabled = false;
                 btnMoveNodeDown.Enabled = false;
             }
+        }
+
+        private void GBGMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }

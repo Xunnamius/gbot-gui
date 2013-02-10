@@ -14,7 +14,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>E:\Shell Folders\Desktop\Pub\</PublishUrl>
+    <PublishUrl>E:\GitHub\GBotGUI\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -24,8 +24,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>0.1.115.%2a</ApplicationVersion>
+    <ApplicationRevision>255</ApplicationRevision>
+    <ApplicationVersion>0.9.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -81,15 +81,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BotNode\ClickNodeSubType.cs" />
+    <Compile Include="Node\EntropyLevel.cs" />
+    <Compile Include="Node\InternalNodeSettings.cs" />
+    <Compile Include="Node\InternalTimeSettings.cs" />
+    <Compile Include="Node\MouseSpeed.cs" />
+    <Compile Include="Node\NodeSettings.cs" />
+    <Compile Include="Node\PriorityLevel.cs" />
+    <Compile Include="Node\Types\Click\ClickNodeRecordType.cs" />
     <Compile Include="GUIs\GBGAbout.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUIs\GBGAbout.Designer.cs">
       <DependentUpon>GBGAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="BotNode\BotNodeType.cs" />
-    <Compile Include="BotNode\BotNodeUtilities.cs" />
+    <Compile Include="Node\NodeType.cs" />
     <Compile Include="GUIs\GBGApplicationSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,21 +131,22 @@
     <Compile Include="GUIs\GBGTimeSettings.Designer.cs">
       <DependentUpon>GBGTimeSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUIs\SettingsUtilities.cs" />
+    <Compile Include="GUIs\GUIUtilities.cs" />
     <Compile Include="Hotkey.cs" />
-    <Compile Include="MacroRecord\MacroRecordType.cs" />
-    <Compile Include="MacroRecord\RecordType\ClickMacroRecord.cs" />
-    <Compile Include="BotNode\NodeType\ClickNode.cs" />
-    <Compile Include="MacroRecord\RecordType\DurationMacroRecord.cs" />
-    <Compile Include="BotNode\NodeType\GBGBotNode.cs" />
+    <Compile Include="Record\RecordType.cs" />
+    <Compile Include="Record\Types\Click\ClickRecordType.cs" />
+    <Compile Include="Record\Types\Click\ClickRecord.cs" />
+    <Compile Include="Node\Types\Click\ClickNode.cs" />
+    <Compile Include="Record\Types\Duration\DurationRecord.cs" />
+    <Compile Include="Node\Types\GenericNode.cs" />
     <Compile Include="GUIs\GBGMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUIs\GBGMain.Designer.cs">
       <DependentUpon>GBGMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="BotNode\IBotNode.cs" />
-    <Compile Include="MacroRecord\MacroRecordBase.cs" />
+    <Compile Include="Node\INode.cs" />
+    <Compile Include="Record\RecordBase.cs" />
     <Compile Include="MouseController.cs" />
     <Compile Include="Profile\Profile.cs" />
     <Compile Include="Program.cs" />
@@ -178,6 +184,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="app.config" />
     <None Include="GameBotGUI_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
