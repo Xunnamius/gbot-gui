@@ -13,6 +13,7 @@ namespace GameBotGUI
         [STAThread]
         static void Main()
         {
+            // Load the Application
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new GBGMain());

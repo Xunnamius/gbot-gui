@@ -9,7 +9,7 @@ namespace GameBotGUI.Record.Types.Duration
     class DurationRecord : RecordBase
     {
         private Int32 _duration;
-        public Int32 Duration { get; set { _duration = value < 0 ? 0 : value; } }
+        public Int32 Duration { get { return _duration; } set { _duration = value < 0 ? 0 : value; } }
 
         public DurationRecord(Int32 duration) : base(RecordType.DurationRecord)
         {

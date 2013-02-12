@@ -133,10 +133,12 @@
     </Compile>
     <Compile Include="GUIs\GUIUtilities.cs" />
     <Compile Include="Hotkey.cs" />
+    <Compile Include="Profile\ProfileController.cs" />
     <Compile Include="Record\RecordType.cs" />
     <Compile Include="Record\Types\Click\ClickRecordType.cs" />
     <Compile Include="Record\Types\Click\ClickRecord.cs" />
     <Compile Include="Node\Types\Click\ClickNode.cs" />
+    <Compile Include="Record\Types\Duration\DurationRecordType.cs" />
     <Compile Include="Record\Types\Duration\DurationRecord.cs" />
     <Compile Include="Node\Types\GenericNode.cs" />
     <Compile Include="GUIs\GBGMain.cs">
@@ -148,9 +150,10 @@
     <Compile Include="Node\INode.cs" />
     <Compile Include="Record\RecordBase.cs" />
     <Compile Include="MouseController.cs" />
-    <Compile Include="Profile\Profile.cs" />
+    <Compile Include="Profile\NodeProfile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="GUIs\GBGAbout.resx">
       <DependentUpon>GBGAbout.cs</DependentUpon>
     </EmbeddedResource>

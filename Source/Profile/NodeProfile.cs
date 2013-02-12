@@ -8,19 +8,18 @@ using GameBotGUI.Node.Types;
 namespace GameBotGUI.Profile
 {
     [Serializable()]
-    class Profile
+    class NodeProfile
     {
         private String _name;
-        private List<GenericNode> _nodeList;
 
         public String Name { get { return _name; } set { Rename(value); } }
         public String FullName { get; private set; }
         public String FilePath { get; private set; }
-        public List<GenericNode> NodeList { get { return _nodeList; } }
+        public List<GenericNode> NodeList { get; set; }
         
-        public Profile(String name, String path, List<GenericNode> nodeList)
+        public NodeProfile(String name, String path, List<GenericNode> nodeList)
         {
-            _nodeList = nodeList;
+            NodeList = nodeList;
             FilePath = path;
             Rename(name);
         }

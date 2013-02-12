@@ -9,7 +9,5 @@ namespace GameBotGUI.Node
     {
         String Name { get; }
         NodeType Type { get; }
-        void SetOptions(Dictionary<String, Object> dict);
-        Dictionary<String, Object> getNonDefaultOptions();
     }
 }

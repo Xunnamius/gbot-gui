@@ -10,6 +10,11 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using Microsoft.VisualBasic;
 using System.Diagnostics;
+using GameBotGUI.Node.Types;
+using GameBotGUI.Record;
+using GameBotGUI.Node;
+using GameBotGUI.Record.Types.Click;
+using GameBotGUI.Record.Types.Duration;
 
 namespace GameBotGUI
 {
@@ -17,37 +22,32 @@ namespace GameBotGUI
     {
         private GBGMain parent;
         private int mouseTracking = 0;
-        private Dictionary<String, Object> nodeSettings;
-        private Dictionary<String, Object> timeSettings;
-        private ClickNode generatedNode = null;
+        private GenericNode generatedNode = null;
         private Stopwatch stopwatch = new Stopwatch();
 
         private Boolean _okExit = false;
         public Boolean OkExit { get { return _okExit; } }
 
         protected Boolean inCreateMode;
-        internal ObservableCollection<RecordBase> Records = new ObservableCollection<RecordBase>();
+        protected ObservableCollection<RecordBase> records;
 
         public GBGClickCreateModify(GBGMain parent)
         {
             InitializeComponent();
             this.parent = parent;
-            inCreateMode = false;
-
-            nodeSettings = GUIUtilities.GenerateDefaultNodeSettingsDictionary();
-            timeSettings = GUIUtilities.GenerateDefaultTimeSettingsDictionary();
+            inCreateMode = true;
+            records = new ObservableCollection<RecordBase>();
         }
 
-        public GBGClickCreateModify(GBGMain mainForm, ClickNode clickNode)
+        public GBGClickCreateModify(GBGMain mainForm, GenericNode genericNode)
         {
             InitializeComponent();
             parent = mainForm;
-            inCreateMode = true;
-
-            txbName.Text = clickNode.Name;
-            Records = (ObservableCollection<RecordBase>) clickNode.GetOption("records");
-            nodeSettings = new Dictionary<string, object>((Dictionary<string, object>) clickNode.GetOption("nodeSettings"));
-            timeSettings = new Dictionary<string, object>((Dictionary<string, object>) clickNode.GetOption("timeSettings"));
+            inCreateMode = false;
+            generatedNode = genericNode;
+            // XXX: We clone it (in preparation) for duplication functionality
+            records = ((NodeSettings) genericNode.Settings.Clone()).Records;
+            txbName.Text = genericNode.Name;
         }
 
         private void setDefaultTitle()
@@ -61,9 +61,9 @@ namespace GameBotGUI
             lbRecords.DisplayMember = "Display";
             setDefaultTitle();
 
-            Records.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((send, evarg) =>
+            records.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((send, evarg) =>
             {
-                if(Records.Count > 0)
+                if(records.Count > 0)
                     btnClear.Enabled = true;
                 else
                 {
@@ -76,24 +76,25 @@ namespace GameBotGUI
 
                 object ndx = lbRecords.SelectedItem;
                 lbRecords.Items.Clear();
-                lbRecords.Items.AddRange(Records.ToArray<RecordBase>());
+                lbRecords.Items.AddRange(records.ToArray<RecordBase>());
 
                 try { lbRecords.SelectedItem = ndx; }
                 catch(Exception ignore) { }
             });
 
-            if(Records.Count > 0) Records.Move(0, 0);
-            else Records.Clear();
+            // XXX: Force the change event
+            if(records.Count > 0) records.Move(0, 0);
+            else records.Clear();
         }
 
-        internal ClickNode GetGeneratedNode()
+        internal GenericNode GetGeneratedNode()
         {
             return generatedNode;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            Records.Clear();
+            records.Clear();
         }
 
         private void lbRecords_SelectedIndexChanged(object sender, EventArgs e)
@@ -106,7 +107,7 @@ namespace GameBotGUI
 
         private void btnDeleteRecord_Click(object sender, EventArgs e)
         {
-            Records.Remove((RecordBase) lbRecords.SelectedItem);
+            records.Remove((RecordBase) lbRecords.SelectedItem);
 
             btnModifyRecord.Enabled = false;
             btnMoveUp.Enabled = false;
@@ -117,16 +118,16 @@ namespace GameBotGUI
         private void btnMoveUp_Click(object sender, EventArgs e)
         {
             RecordBase record2, record1 = (RecordBase) lbRecords.SelectedItem;
-            int ndx1 = Records.IndexOf(record1);
+            int ndx1 = records.IndexOf(record1);
             int ndx2 = ndx1 - 1;
 
             if(ndx2 >= 0)
             {
-                record2 = Records[ndx2];
-                Records.RemoveAt(ndx1);
-                Records.RemoveAt(ndx2);
-                Records.Insert(ndx2, record1);
-                Records.Insert(ndx1, record2);
+                record2 = records[ndx2];
+                records.RemoveAt(ndx1);
+                records.RemoveAt(ndx2);
+                records.Insert(ndx2, record1);
+                records.Insert(ndx1, record2);
 
                 lbRecords.SelectedIndex = ndx2;
             }
@@ -135,16 +136,16 @@ namespace GameBotGUI
         private void btnMoveDown_Click(object sender, EventArgs e)
         {
             RecordBase record2, record1 = (RecordBase) lbRecords.SelectedItem;
-            int ndx1 = Records.IndexOf(record1);
+            int ndx1 = records.IndexOf(record1);
             int ndx2 = ndx1 + 1;
 
-            if(ndx2 < Records.Count)
+            if(ndx2 < records.Count)
             {
-                record2 = Records[ndx2];
-                Records.RemoveAt(ndx2);
-                Records.RemoveAt(ndx1);
-                Records.Insert(ndx1, record2);
-                Records.Insert(ndx2, record1);
+                record2 = records[ndx2];
+                records.RemoveAt(ndx2);
+                records.RemoveAt(ndx1);
+                records.Insert(ndx1, record2);
+                records.Insert(ndx2, record1);
 
                 lbRecords.SelectedIndex = ndx2;
             }
@@ -217,13 +218,13 @@ namespace GameBotGUI
 
                 if(stopwatch.IsRunning)
                 {
-                    Records.Add(new DurationMacroRecord(new Dictionary<String, Object>() { { "duration", stopwatch.ElapsedMilliseconds } }));
+                    records.Add(new DurationRecord(GUIUtilities.ToInt32(stopwatch.ElapsedMilliseconds)));
                     stopwatch.Restart();
                 }
 
                 else stopwatch.Start();
 
-                Records.Add(new ClickMacroRecord(new Dictionary<String, Object>(){ { "point", Cursor.Position } }, clickType));
+                records.Add(new ClickRecord(clickType, Cursor.Position));
             }
         }
 
@@ -262,7 +263,7 @@ namespace GameBotGUI
             if(txbName.Text.Length > 0)
             {
                 generatedNode = new ClickNode(txbName.Text.Length > 0 ? txbName.Text : null);
-                generatedNode.SetOption("records", RecordBase.DeepCopy(Records));
+                generatedNode.SetOption("records", RecordBase.DeepCopy(records));
                 generatedNode.SetOption("nodeSettings", nodeSettings.ToDictionary(e => e.Key, e => e.Value));
                 generatedNode.SetOption("timeSettings", timeSettings.ToDictionary(e => e.Key, e => e.Value));
 
@@ -286,8 +287,8 @@ namespace GameBotGUI
                 {
                     RecordBase gen = modForm.GetGeneratedRecord();
 
-                    Records.RemoveAt(ndx);
-                    Records.Insert(ndx, gen);
+                    records.RemoveAt(ndx);
+                    records.Insert(ndx, gen);
                     lbRecords.SelectedIndex = ndx;
                     parent.WriteLogLine("Record modification accepted!");
                 }
@@ -306,9 +307,9 @@ namespace GameBotGUI
                     RecordBase mac = modForm.GetGeneratedRecord();
 
                     if(lbRecords.SelectedIndex >= 0)
-                        Records.Insert(lbRecords.SelectedIndex+1, mac);
+                        records.Insert(lbRecords.SelectedIndex+1, mac);
                     else
-                        Records.Add(mac);
+                        records.Add(mac);
 
                     parent.WriteLogLine("New record accepted!");
                 }

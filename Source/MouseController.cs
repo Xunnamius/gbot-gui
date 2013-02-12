@@ -9,7 +9,7 @@ using GameBotGUI.Record.Types.Click;
 
 namespace GameBotGUI
 {
-    static sealed class MouseController
+    static class MouseController
     {
         private const int MouseEventDelayMS = 2;
         

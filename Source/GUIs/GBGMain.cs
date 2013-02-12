@@ -10,15 +10,19 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using MovablePython;
+using GameBotGUI.Properties;
+using GameBotGUI.Profile;
+using GameBotGUI.Node.Types;
+using GameBotGUI.Record;
 
 namespace GameBotGUI
 {
     public partial class GBGMain : Form
     {
         private int CURRENT_ACTION_CHARLIMIT = 110;
-        
-        private ObservableCollection<Profile> Profiles = new ObservableCollection<Profile>();
-        private ObservableCollection<GBGBotNode> Nodes = new ObservableCollection<GBGBotNode>();
+
+        private ObservableCollection<NodeProfile> Profiles = new ObservableCollection<NodeProfile>();
+        private ObservableCollection<GenericNode> Nodes = new ObservableCollection<GenericNode>();
         private Dictionary<String, Object> applicationSettings = GUIUtilities.GenerateDefaultApplicationSettingsDictionary();
         private Dictionary<String, Object> profileSettings = GUIUtilities.GenerateDefaultProfileSettingsDictionary();
         private int itr = 0;
@@ -67,6 +71,14 @@ namespace GameBotGUI
             };
 
             hkRunBot.Register(this);
+
+            Properties.Settings.Default.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler((s, e) =>
+            {
+                if(e.PropertyName == "profileHistory")
+                    RefreshProfileSelector();
+            });
+
+            RefreshProfileSelector();
         }
 
         internal void WriteLogLine(params object[] segments)
@@ -87,17 +99,17 @@ namespace GameBotGUI
             lblLastActionTime.Text = DateTime.Now.ToLocalTime().ToString();
         }
 
-        internal Profile LoadProfile(String path)
+        internal NodeProfile LoadProfile(String path)
         {
             throw new NotImplementedException();
         }
 
-        internal bool LoadProfile(Profile profile)
+        internal bool LoadProfile(NodeProfile profile)
         {
             throw new NotImplementedException();
         }
 
-        internal bool SaveProfile(Profile profile)
+        internal bool SaveProfile(NodeProfile profile)
         {
             throw new NotImplementedException();
         }
@@ -502,6 +514,11 @@ namespace GameBotGUI
             txbLog.Text = "-- Cleared --";
         }
 
+        private void clearProfileHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.profileHistory.Clear();
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -636,6 +653,17 @@ namespace GameBotGUI
         private void GBGMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Save();
+        }
+
+        private void RefreshProfileSelector()
+        {
+            cbProfileSelector.Enabled = false;
+
+            cbProfileSelector.Items.Clear();
+            foreach(String profilePath in Properties.Settings.Default.profileHistory)
+                cbProfileSelector.Items.Insert(0, profilePath);
+
+            cbProfileSelector.Enabled = true;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace GameBotGUI.Record
             Type = type;
         }
 
-        public virtual new String ToString()
+        public override String ToString()
         {
             return Type.ToString();
         }

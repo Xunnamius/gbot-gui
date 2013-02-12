@@ -39,7 +39,7 @@ namespace GameBotGUI.Node.Types
             return newNode;
         }
 
-        public virtual new String ToString()
+        public override String ToString()
         {
             return "[" + Type + "]: " + Name;
         }

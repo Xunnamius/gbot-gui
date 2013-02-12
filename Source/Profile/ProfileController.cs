@@ -8,25 +8,25 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GameBotGUI.Profile
 {
-    static sealed class ProfileController
+    static class ProfileController
     {
-        public static Profile LoadProfile(String filePath)
+        public static NodeProfile LoadProfile(String filePath)
         {
-            Profile profile = null;
+            NodeProfile profile = null;
 
             using(Stream stream = File.Open(filePath, FileMode.Create))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                profile = (Profile) formatter.Deserialize(stream);
+                profile = (NodeProfile) formatter.Deserialize(stream);
             }
 
             if(profile != null && !Properties.Settings.Default.profileHistory.Contains(profile.FilePath))
-                Properties.Settings.Default.profileHistory.Insert(0, profile.FilePath);
+                Properties.Settings.Default.profileHistory.Add(profile.FilePath);
 
             return profile;
         }
 
-        public static void SaveProfile(Profile profile)
+        public static void SaveProfile(NodeProfile profile)
         {
             using(Stream stream = File.OpenRead(profile.FilePath))
             {
@@ -35,7 +35,7 @@ namespace GameBotGUI.Profile
             }
 
             if(!Properties.Settings.Default.profileHistory.Contains(profile.FilePath))
-                Properties.Settings.Default.profileHistory.Insert(0, profile.FilePath);
+                Properties.Settings.Default.profileHistory.Add(profile.FilePath);
         }
     }
 }

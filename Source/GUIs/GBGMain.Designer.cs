@@ -39,6 +39,7 @@
             this.resetRunStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearNodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearProcessLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearProfileHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,6 +124,7 @@
             this.resetRunStatsToolStripMenuItem,
             this.clearNodesToolStripMenuItem,
             this.clearProcessLogToolStripMenuItem,
+            this.clearProfileHistoryToolStripMenuItem,
             this.toolStripSeparator2,
             this.restartToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -163,6 +165,13 @@
             this.clearProcessLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clearProcessLogToolStripMenuItem.Text = "Clear Process Log";
             this.clearProcessLogToolStripMenuItem.Click += new System.EventHandler(this.clearProcessLogToolStripMenuItem_Click);
+            // 
+            // clearProfileHistoryToolStripMenuItem
+            // 
+            this.clearProfileHistoryToolStripMenuItem.Name = "clearProfileHistoryToolStripMenuItem";
+            this.clearProfileHistoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearProfileHistoryToolStripMenuItem.Text = "Clear Profile History";
+            this.clearProfileHistoryToolStripMenuItem.Click += new System.EventHandler(this.clearProfileHistoryToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -632,6 +641,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         internal System.Windows.Forms.NotifyIcon trayNotif;
+        private System.Windows.Forms.ToolStripMenuItem clearProfileHistoryToolStripMenuItem;
     }
 }
 
