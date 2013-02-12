@@ -1,5 +1,4 @@
-Game Bot with a Graphical User Interface
-=======
+#THIS IS THE DEVELOPER BRANCH. NOTHING HERE IS GUARANTEED TO WORK AT ANY TIME, IF AT ALL. BEWARE.#
 
 The Game Bot with a Graphical User Interface (or simply GBotGUI) is a bot for online graphical MMOs that doesn't depend on AutoHotKey. Comes complete with its own set of tools and GUI for easy use.
 
