@@ -12,43 +12,41 @@ using GameBotGUI.Record.Types.Duration;
 
 namespace GameBotGUI
 {
-    internal partial class GBGClickAddModifyRecord : Form
+    internal partial class GBGNodeAddModifyRecord : Form
     {
         RecordBase newRecord = null;
 
         private Boolean _okExit = false;
         public Boolean OkExit { get { return _okExit; } }
 
-        public GBGClickAddModifyRecord()
+        public GBGNodeAddModifyRecord()
         {
             InitializeComponent();
         }
 
-        public GBGClickAddModifyRecord(RecordBase record)
+        public GBGNodeAddModifyRecord(RecordBase record)
         {
             InitializeComponent();
             newRecord = record;
         }
 
-        private void GBGClickAddModifyRecord_Load(object sender, EventArgs e)
+        private void GBGClickAddModifyRecord_Load(Object sender, EventArgs e)
         {
             cbRecordType.DisplayMember = "Key";
             cbRecordType.ValueMember = "Value";
-
-            Array clickRecordTypeEnumValues = Enum.GetValues(typeof(ClickRecordType));
-
-            foreach(ClickRecordType recordType in clickRecordTypeEnumValues)
-                cbRecordType.Items.Add(new KeyValuePair<String, ClickRecordType>(recordType.ToString(), recordType));
+            
+            foreach(ClickRecordType recordType in Enum.GetValues(typeof(ClickRecordType)))
+                cbRecordType.Items.Add(new KeyValuePair<String, Type>(recordType.ToString(), typeof(ClickRecordType)));
 
             // Tack on "Duration" at the end as well
             cbRecordType.Items.Add(
-                new KeyValuePair<String, DurationRecordType>(
-                    DurationRecordType.Duration.ToString(), DurationRecordType.Duration));
+                new KeyValuePair<String, Type>(
+                    DurationRecordType.Duration.ToString(), typeof(DurationRecordType)));
 
             cbRecordType.SelectedIndexChanged += new EventHandler((sendr, evtargs) =>
             {
-                KeyValuePair<String, Object> selection =
-                    (KeyValuePair<String, Object>) cbRecordType.SelectedItem;
+                KeyValuePair<String, Type> selection =
+                    (KeyValuePair<String, Type>) cbRecordType.SelectedItem;
 
                 if(selection.Key == DurationRecordType.Duration.ToString())
                     showMS();
@@ -81,7 +79,7 @@ namespace GameBotGUI
             else Text = "Create a record";
         }
 
-        public RecordBase GetGeneratedRecord()
+        public RecordBase GetRecord()
         {
             return newRecord;
         }
@@ -108,15 +106,15 @@ namespace GameBotGUI
             numY.Visible = false;
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnOk_Click(Object sender, EventArgs e)
         {
-            KeyValuePair<String, Object> selection =
-                (KeyValuePair<String, Object>) cbRecordType.SelectedItem;
+            KeyValuePair<String, Type> selection =
+                (KeyValuePair<String, Type>) cbRecordType.SelectedItem;
 
             if(selection.Key == DurationRecordType.Duration.ToString())
                 newRecord = new DurationRecord(GUIUtilities.ToInt32(numDuration.Value));
             else
-                newRecord = new ClickRecord((ClickRecordType) selection.Value,
+                newRecord = new ClickRecord((ClickRecordType) Enum.Parse(selection.Value, selection.Key),
                     new Point(GUIUtilities.ToInt32(numX.Value), GUIUtilities.ToInt32(numY.Value)));
 
             _okExit = true;

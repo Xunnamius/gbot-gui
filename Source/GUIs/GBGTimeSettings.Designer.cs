@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GBGTimeSettings));
             this.btnOk = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -71,11 +72,6 @@
             // 
             this.cbEntropy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbEntropy.FormattingEnabled = true;
-            this.cbEntropy.Items.AddRange(new object[] {
-            "Low",
-            "Medium",
-            "High",
-            "Disabled"});
             this.cbEntropy.Location = new System.Drawing.Point(65, 22);
             this.cbEntropy.Name = "cbEntropy";
             this.cbEntropy.Size = new System.Drawing.Size(121, 21);
@@ -90,7 +86,7 @@
             0});
             this.numForcedPause.Location = new System.Drawing.Point(95, 128);
             this.numForcedPause.Maximum = new decimal(new int[] {
-            999,
+            999999,
             0,
             0,
             0});
@@ -144,6 +140,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnOk);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "GBGTimeSettings";
             this.Text = "GBGTimeSettings";
             this.Load += new System.EventHandler(this.GBGTimeSettings_Load);

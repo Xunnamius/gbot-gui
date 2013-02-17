@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Collections.ObjectModel;
 using GameBotGUI.Record;
+using System.ComponentModel;
 
 namespace GameBotGUI.Node.Types
 {
     [Serializable()]
-    class GenericNode : INode, ICloneable
+    public class GenericNode : INode, ICloneable
     {
         public NodeSettings Settings { get; set; }
 
@@ -20,16 +20,16 @@ namespace GameBotGUI.Node.Types
         {
             // Initialize with default settings
             Settings = new NodeSettings(name, type,
-                new ObservableCollection<RecordBase>(),
-                new InternalNodeSettings(Properties.Settings.Default.defaultEnabled,
-                    (PriorityLevel) Properties.Settings.Default.defaultPriorityLevel,
-                    Properties.Settings.Default.defaultNodeRuns,
-                    Properties.Settings.Default.defaultVOffset,
-                    Properties.Settings.Default.defaultHOffset,
-                    (MouseSpeed) Properties.Settings.Default.defaultMouseSpeed),
+                new BindingList<RecordBase>(),
+                new InternalNodeSettings(Properties.Settings.Default.DefaultEnabled,
+                    (PriorityLevel) Properties.Settings.Default.DefaultPriorityLevel,
+                    Properties.Settings.Default.DefaultNodeRuns,
+                    Properties.Settings.Default.DefaultVOffset,
+                    Properties.Settings.Default.DefaultHOffset,
+                    (MouseSpeed) Properties.Settings.Default.DefaultMouseSpeed),
                 new InternalTimeSettings(
-                    (EntropyLevel) Properties.Settings.Default.defaultNodeEntropy,
-                    Properties.Settings.Default.defaultForcedPause));
+                    (EntropyLevel) Properties.Settings.Default.DefaultNodeEntropy,
+                    Properties.Settings.Default.DefaultForcedPause));
         }
 
         public virtual Object Clone()

@@ -5,5 +5,5 @@ using System.Text;
 
 namespace GameBotGUI.Record.Types.Click
 {
-    enum ClickRecordType { LeftClick, RightClick, MiddleClick, NoClick }
+    public enum ClickRecordType { LeftClick, RightClick, MiddleClick, NoClick }
 }

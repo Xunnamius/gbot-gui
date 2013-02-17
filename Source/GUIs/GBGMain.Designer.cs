@@ -39,7 +39,6 @@
             this.resetRunStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearNodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearProcessLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearProfileHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +47,6 @@
             this.loadProfileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applicationSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.profileSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -71,7 +69,7 @@
             this.lblTotalRuns = new System.Windows.Forms.Label();
             this.lblTotalClicks = new System.Windows.Forms.Label();
             this.lblLastActionTime = new System.Windows.Forms.Label();
-            this.lblTotalRunTime = new System.Windows.Forms.Label();
+            this.lblCurrentRunTime = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -81,6 +79,7 @@
             this.btnMoveNodeDown = new System.Windows.Forms.Button();
             this.btnMoveNodeUp = new System.Windows.Forms.Button();
             this.trayNotif = new System.Windows.Forms.NotifyIcon(this.components);
+            this.reloadProfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripMain.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.gbxRunStats.SuspendLayout();
@@ -124,7 +123,6 @@
             this.resetRunStatsToolStripMenuItem,
             this.clearNodesToolStripMenuItem,
             this.clearProcessLogToolStripMenuItem,
-            this.clearProfileHistoryToolStripMenuItem,
             this.toolStripSeparator2,
             this.restartToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -166,13 +164,6 @@
             this.clearProcessLogToolStripMenuItem.Text = "Clear Process Log";
             this.clearProcessLogToolStripMenuItem.Click += new System.EventHandler(this.clearProcessLogToolStripMenuItem_Click);
             // 
-            // clearProfileHistoryToolStripMenuItem
-            // 
-            this.clearProfileHistoryToolStripMenuItem.Name = "clearProfileHistoryToolStripMenuItem";
-            this.clearProfileHistoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.clearProfileHistoryToolStripMenuItem.Text = "Clear Profile History";
-            this.clearProfileHistoryToolStripMenuItem.Click += new System.EventHandler(this.clearProfileHistoryToolStripMenuItem_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -180,10 +171,10 @@
             // 
             // restartToolStripMenuItem
             // 
-            this.restartToolStripMenuItem.Enabled = false;
             this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
             this.restartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.restartToolStripMenuItem.Text = "Factory Reset";
+            this.restartToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -196,30 +187,30 @@
             // 
             this.profilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveProfileToolStripMenuItem,
-            this.loadProfileToolStripMenuItem});
+            this.loadProfileToolStripMenuItem,
+            this.reloadProfilesToolStripMenuItem});
             this.profilesToolStripMenuItem.Name = "profilesToolStripMenuItem";
             this.profilesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.profilesToolStripMenuItem.Text = "Profiles";
             // 
             // saveProfileToolStripMenuItem
             // 
-            this.saveProfileToolStripMenuItem.Enabled = false;
             this.saveProfileToolStripMenuItem.Name = "saveProfileToolStripMenuItem";
             this.saveProfileToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.saveProfileToolStripMenuItem.Text = "Load Profile";
+            this.saveProfileToolStripMenuItem.Click += new System.EventHandler(this.loadProfileToolStripMenuItem_Click);
             // 
             // loadProfileToolStripMenuItem
             // 
-            this.loadProfileToolStripMenuItem.Enabled = false;
             this.loadProfileToolStripMenuItem.Name = "loadProfileToolStripMenuItem";
             this.loadProfileToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.loadProfileToolStripMenuItem.Text = "Save Profile";
+            this.loadProfileToolStripMenuItem.Click += new System.EventHandler(this.saveProfileToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.applicationSettingsToolStripMenuItem,
-            this.profileSettingsToolStripMenuItem});
+            this.applicationSettingsToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -230,13 +221,6 @@
             this.applicationSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.applicationSettingsToolStripMenuItem.Text = "Application Settings";
             this.applicationSettingsToolStripMenuItem.Click += new System.EventHandler(this.applicationSettingsToolStripMenuItem_Click);
-            // 
-            // profileSettingsToolStripMenuItem
-            // 
-            this.profileSettingsToolStripMenuItem.Name = "profileSettingsToolStripMenuItem";
-            this.profileSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.profileSettingsToolStripMenuItem.Text = "Profile Settings";
-            this.profileSettingsToolStripMenuItem.Click += new System.EventHandler(this.profileSettingsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -306,7 +290,8 @@
             this.lbNodes.ScrollAlwaysVisible = true;
             this.lbNodes.Size = new System.Drawing.Size(302, 121);
             this.lbNodes.TabIndex = 6;
-            this.lbNodes.SelectedIndexChanged += new System.EventHandler(this.lbNodes_SelectedIndexChanged);
+            this.lbNodes.DataSourceChanged += new System.EventHandler(this.lbNodes_DataSourceChanged);
+            this.lbNodes.SelectedValueChanged += new System.EventHandler(this.lbNodes_SelectedValueChanged);
             // 
             // cbProfileSelector
             // 
@@ -317,6 +302,7 @@
             this.cbProfileSelector.Name = "cbProfileSelector";
             this.cbProfileSelector.Size = new System.Drawing.Size(217, 21);
             this.cbProfileSelector.TabIndex = 1;
+            this.cbProfileSelector.SelectedIndexChanged += new System.EventHandler(this.cbProfileSelector_SelectedIndexChanged);
             // 
             // lblProfileSelector
             // 
@@ -347,7 +333,6 @@
             this.btnDuplicateNode.TabIndex = 5;
             this.btnDuplicateNode.Text = "Duplicate Node";
             this.btnDuplicateNode.UseVisualStyleBackColor = true;
-            this.btnDuplicateNode.Click += new System.EventHandler(this.btnDuplicateNode_Click);
             // 
             // btnDestroyNode
             // 
@@ -400,7 +385,7 @@
             this.gbxRunStats.Controls.Add(this.lblTotalRuns);
             this.gbxRunStats.Controls.Add(this.lblTotalClicks);
             this.gbxRunStats.Controls.Add(this.lblLastActionTime);
-            this.gbxRunStats.Controls.Add(this.lblTotalRunTime);
+            this.gbxRunStats.Controls.Add(this.lblCurrentRunTime);
             this.gbxRunStats.Controls.Add(this.label5);
             this.gbxRunStats.Controls.Add(this.label6);
             this.gbxRunStats.Controls.Add(this.label3);
@@ -420,7 +405,7 @@
             this.lblCurrentProfile.Name = "lblCurrentProfile";
             this.lblCurrentProfile.Size = new System.Drawing.Size(150, 13);
             this.lblCurrentProfile.TabIndex = 11;
-            this.lblCurrentProfile.Text = "loading...";
+            this.lblCurrentProfile.Text = "No profile loaded or saved";
             // 
             // lblNodeCount
             // 
@@ -428,7 +413,7 @@
             this.lblNodeCount.Name = "lblNodeCount";
             this.lblNodeCount.Size = new System.Drawing.Size(150, 13);
             this.lblNodeCount.TabIndex = 10;
-            this.lblNodeCount.Text = " loading...";
+            this.lblNodeCount.Text = " N/A";
             // 
             // lblTotalRuns
             // 
@@ -455,14 +440,14 @@
             this.lblLastActionTime.TabIndex = 7;
             this.lblLastActionTime.Text = "loading...";
             // 
-            // lblTotalRunTime
+            // lblCurrentRunTime
             // 
-            this.lblTotalRunTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalRunTime.Location = new System.Drawing.Point(112, 24);
-            this.lblTotalRunTime.Name = "lblTotalRunTime";
-            this.lblTotalRunTime.Size = new System.Drawing.Size(150, 13);
-            this.lblTotalRunTime.TabIndex = 6;
-            this.lblTotalRunTime.Text = "loading...";
+            this.lblCurrentRunTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentRunTime.Location = new System.Drawing.Point(112, 24);
+            this.lblCurrentRunTime.Name = "lblCurrentRunTime";
+            this.lblCurrentRunTime.Size = new System.Drawing.Size(150, 13);
+            this.lblCurrentRunTime.TabIndex = 6;
+            this.lblCurrentRunTime.Text = "loading...";
             // 
             // label5
             // 
@@ -514,9 +499,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 13);
+            this.label1.Size = new System.Drawing.Size(93, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Total Run Time:";
+            this.label1.Text = "Current Run Time:";
             // 
             // btnMoveNodeDown
             // 
@@ -547,6 +532,13 @@
             this.trayNotif.Text = "You cheater you!";
             this.trayNotif.Visible = true;
             // 
+            // reloadProfilesToolStripMenuItem
+            // 
+            this.reloadProfilesToolStripMenuItem.Enabled = false;
+            this.reloadProfilesToolStripMenuItem.Name = "reloadProfilesToolStripMenuItem";
+            this.reloadProfilesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reloadProfilesToolStripMenuItem.Text = "Reload Profiles";
+            // 
             // GBGMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -570,6 +562,7 @@
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.menuStripMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -609,7 +602,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveProfileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadProfileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applicationSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem profileSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manualToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -634,14 +626,14 @@
         private System.Windows.Forms.Label lblTotalRuns;
         private System.Windows.Forms.Label lblTotalClicks;
         private System.Windows.Forms.Label lblLastActionTime;
-        private System.Windows.Forms.Label lblTotalRunTime;
+        private System.Windows.Forms.Label lblCurrentRunTime;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         internal System.Windows.Forms.NotifyIcon trayNotif;
-        private System.Windows.Forms.ToolStripMenuItem clearProfileHistoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloadProfilesToolStripMenuItem;
     }
 }
 

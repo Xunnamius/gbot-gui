@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace MovablePython
 {
+    [System.Diagnostics.DebuggerStepThrough()]
     public class Hotkey : IMessageFilter
 	{
 		#region Interop

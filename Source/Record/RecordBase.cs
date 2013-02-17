@@ -7,7 +7,8 @@ using GameBotGUI.Record.Types.Click;
 
 namespace GameBotGUI.Record
 {
-    abstract class RecordBase
+    [Serializable()]
+    public abstract class RecordBase
     {
         public RecordType Type { get; set; }
         public String Display { get { return ToString(); } }
@@ -22,7 +23,7 @@ namespace GameBotGUI.Record
             return Type.ToString();
         }
 
-        public virtual object Clone()
+        public virtual Object Clone()
         {
             return null;
         }

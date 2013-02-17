@@ -5,5 +5,5 @@ using System.Text;
 
 namespace GameBotGUI.Node
 {
-    enum MouseSpeed { Slow, Medium, Fast, Random }
+    public enum MouseSpeed { Slow, Medium, Fast, Random }
 }

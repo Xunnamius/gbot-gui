@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GameBotGUI.Node
 {
-    class InternalTimeSettings : ICloneable
+    [Serializable()]
+    public class InternalTimeSettings : ICloneable
     {
         private EntropyLevel _entropy;
         private Int32 _forcedPause;
@@ -28,7 +29,7 @@ namespace GameBotGUI.Node
             _forcedPause = forcedPause;
         }
 
-        public object Clone()
+        public Object Clone()
         {
             return new InternalTimeSettings(Entropy, ForcedPause);
         }

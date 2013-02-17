@@ -26,101 +26,210 @@ namespace GameBotGUI.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("(no name)")]
-        public string defaultNodeName {
+        public string DefaultNodeName {
             get {
-                return ((string)(this["defaultNodeName"]));
+                return ((string)(this["DefaultNodeName"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int defaultPriorityLevel {
+        public int DefaultPriorityLevel {
             get {
-                return ((int)(this["defaultPriorityLevel"]));
+                return ((int)(this["DefaultPriorityLevel"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int defaultNodeRuns {
+        public int DefaultNodeRuns {
             get {
-                return ((int)(this["defaultNodeRuns"]));
+                return ((int)(this["DefaultNodeRuns"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int defaultVOffset {
+        public int DefaultVOffset {
             get {
-                return ((int)(this["defaultVOffset"]));
+                return ((int)(this["DefaultVOffset"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int defaultHOffset {
+        public int DefaultHOffset {
             get {
-                return ((int)(this["defaultHOffset"]));
+                return ((int)(this["DefaultHOffset"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public int defaultMouseSpeed {
+        public int DefaultMouseSpeed {
             get {
-                return ((int)(this["defaultMouseSpeed"]));
+                return ((int)(this["DefaultMouseSpeed"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int defaultNodeEntropy {
+        public int DefaultNodeEntropy {
             get {
-                return ((int)(this["defaultNodeEntropy"]));
+                return ((int)(this["DefaultNodeEntropy"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int defaultForcedPause {
+        public int DefaultForcedPause {
             get {
-                return ((int)(this["defaultForcedPause"]));
+                return ((int)(this["DefaultForcedPause"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Indeterminate")]
-        public global::System.Windows.Forms.CheckState defaultEnabled {
+        public global::System.Windows.Forms.CheckState DefaultEnabled {
             get {
-                return ((global::System.Windows.Forms.CheckState)(this["defaultEnabled"]));
+                return ((global::System.Windows.Forms.CheckState)(this["DefaultEnabled"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("gbgprof")]
-        public string profileFileExtension {
+        [global::System.Configuration.DefaultSettingValueAttribute("gbp")]
+        public string ProfileFileExtension {
             get {
-                return ((string)(this["profileFileExtension"]));
+                return ((string)(this["ProfileFileExtension"]));
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection profileHistory {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ApplicationInternodeEntropy {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["profileHistory"]));
+                return ((int)(this["ApplicationInternodeEntropy"]));
             }
             set {
-                this["profileHistory"] = value;
+                this["ApplicationInternodeEntropy"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Indeterminate")]
+        public global::System.Windows.Forms.CheckState ApplicationIntranodeForcePauseEnabled {
+            get {
+                return ((global::System.Windows.Forms.CheckState)(this["ApplicationIntranodeForcePauseEnabled"]));
+            }
+            set {
+                this["ApplicationIntranodeForcePauseEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Indeterminate")]
+        public global::System.Windows.Forms.CheckState ApplicationIntranodeEntropyEnabled {
+            get {
+                return ((global::System.Windows.Forms.CheckState)(this["ApplicationIntranodeEntropyEnabled"]));
+            }
+            set {
+                this["ApplicationIntranodeEntropyEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ApplicationExecutionScheme {
+            get {
+                return ((int)(this["ApplicationExecutionScheme"]));
+            }
+            set {
+                this["ApplicationExecutionScheme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ApplicationTotalRuns {
+            get {
+                return ((int)(this["ApplicationTotalRuns"]));
+            }
+            set {
+                this["ApplicationTotalRuns"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Indeterminate")]
+        public global::System.Windows.Forms.CheckState ApplicationRunInfinityTimes {
+            get {
+                return ((global::System.Windows.Forms.CheckState)(this["ApplicationRunInfinityTimes"]));
+            }
+            set {
+                this["ApplicationRunInfinityTimes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ApplicationGlobalOffsetX {
+            get {
+                return ((int)(this["ApplicationGlobalOffsetX"]));
+            }
+            set {
+                this["ApplicationGlobalOffsetX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ApplicationGlobalOffsetY {
+            get {
+                return ((int)(this["ApplicationGlobalOffsetY"]));
+            }
+            set {
+                this["ApplicationGlobalOffsetY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Indeterminate")]
+        public global::System.Windows.Forms.CheckState ApplicationMinimizeWindowOnRun {
+            get {
+                return ((global::System.Windows.Forms.CheckState)(this["ApplicationMinimizeWindowOnRun"]));
+            }
+            set {
+                this["ApplicationMinimizeWindowOnRun"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ProfileDefaultSaveLocation {
+            get {
+                return ((string)(this["ProfileDefaultSaveLocation"]));
+            }
+            set {
+                this["ProfileDefaultSaveLocation"] = value;
             }
         }
     }

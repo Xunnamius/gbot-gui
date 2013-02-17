@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GameBotGUI.Record
+namespace GameBotGUI
 {
-    public enum RecordType { ClickRecord, DurationRecord }
+    public enum ExecutionScheme { Ordered, Priority, Random }
 }

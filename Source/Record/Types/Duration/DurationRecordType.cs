@@ -5,5 +5,5 @@ using System.Text;
 
 namespace GameBotGUI.Record.Types.Duration
 {
-    enum DurationRecordType { Duration }
+    public enum DurationRecordType { Duration }
 }

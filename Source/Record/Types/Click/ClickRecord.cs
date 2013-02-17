@@ -6,7 +6,8 @@ using System.Drawing;
 
 namespace GameBotGUI.Record.Types.Click
 {
-    class ClickRecord : RecordBase
+    [Serializable()]
+    public class ClickRecord : RecordBase
     {
         private ClickRecordType _subType;
         public ClickRecordType SubType { get { return _subType; } }
@@ -21,10 +22,10 @@ namespace GameBotGUI.Record.Types.Click
 
         public override String ToString()
         {
-            return Type.ToString() + " @ " + TargetPoint.ToString();
+            return SubType.ToString() + " @ " + TargetPoint.ToString();
         }
 
-        public override object Clone()
+        public override Object Clone()
         {
             return new ClickRecord(SubType, TargetPoint);
         }

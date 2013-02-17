@@ -99,7 +99,7 @@ namespace GameBotGUI
         }
         #endregion
 
-        private void GBGAbout_Load(object sender, EventArgs e)
+        private void GBGAbout_Load(Object sender, EventArgs e)
         {
 
         }

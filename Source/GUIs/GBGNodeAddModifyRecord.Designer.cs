@@ -1,6 +1,6 @@
 ﻿namespace GameBotGUI
 {
-    partial class GBGClickAddModifyRecord
+    partial class GBGNodeAddModifyRecord
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GBGNodeAddModifyRecord));
             this.label1 = new System.Windows.Forms.Label();
             this.lblData = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
@@ -171,7 +172,7 @@
             this.lblMilliseconds.Text = "milliseconds";
             this.lblMilliseconds.Visible = false;
             // 
-            // GBGClickAddModifyRecord
+            // GBGNodeAddModifyRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -187,7 +188,10 @@
             this.Controls.Add(this.lblData);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "GBGClickAddModifyRecord";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "GBGNodeAddModifyRecord";
             this.Load += new System.EventHandler(this.GBGClickAddModifyRecord_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numY)).EndInit();

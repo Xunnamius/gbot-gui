@@ -5,5 +5,5 @@ using System.Text;
 
 namespace GameBotGUI.Node
 {
-    enum EntropyLevel { Low, Medium, High, Disabled }
+    public enum EntropyLevel { Low, Medium, High, Disabled }
 }

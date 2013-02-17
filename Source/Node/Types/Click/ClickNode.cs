@@ -7,7 +7,7 @@ using GameBotGUI.Node.Types;
 namespace GameBotGUI.Node.Types.Click
 {
     [Serializable()]
-    class ClickNode : GenericNode
+    public class ClickNode : GenericNode
     {
         public ClickNode(String name)
             : base(name, NodeType.ClickNode)

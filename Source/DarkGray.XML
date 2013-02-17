@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DarkGray</name>
+    </assembly>
+    <members>
+        <member name="T:DarkGray.Forms.Decorators.ExtendedListControl`1">
+            <summary>
+            A class that extends Windows.Forms ListControls (ComboBox and ListBox)
+            with extra functionality.
+            </summary>
+            <typeparam name="T">The type of the objects that comprise the Items IList.</typeparam>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.#ctor(System.Windows.Forms.ListBox)">
+            <summary>
+            Initializes a new instance of the DarkGray.Forms.Decorators.ExtendedListControl class.
+            </summary>
+            <param name="control">The control class you're decorating.</param>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.#ctor(System.Windows.Forms.ComboBox)">
+            <summary>
+            Initializes a new instance of the DarkGray.Forms.Decorators.ExtendedListControl class.
+            </summary>
+            <param name="control">The control class you're decorating.</param>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.DetermineDataSource(System.Windows.Forms.ListControl)">
+            <summary>
+            Determines if the data source is present or not and acts accordingly.
+            </summary>
+            <param name="control">The ListControl in question.</param>
+            <returns>True if there is a datasource, else false.</returns>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.RebindDataSource">
+            <summary>
+            Rebinds the internal data source depending on how the
+            decorated ListControl has changed. Useful if your
+            control's DataSource/Items is changing, as this method
+            will update this decorator accordingly and should be
+            called.
+            </summary>
+            <exception cref="M:System.ArgumentException.#ctor(System.String)"/>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.SelectedShiftUp(System.Boolean)">
+            <summary>
+            Shifts the selected item up (reduces index) in the list by one.
+            </summary>
+            <param name="updateSelectedIndex">If true, the control's selectedIndex will be updated with the new index</param>
+            <returns>True if the operation was successful, otherwise false.</returns>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.SelectedShiftDown(System.Boolean)">
+            <summary>
+            Shifts the selected item down (increases index) in the list by one.
+            </summary>
+            <param name="updateSelectedIndex">If true, the control's selectedIndex will be updated with the new index.</param>
+            <returns>True if the operation was successful, otherwise false.</returns>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.SelectedDelete(System.Boolean)">
+            <summary>
+            Removes the selected item from the control.
+            </summary>
+            <param name="updateSelectedIndex">Boolean indicating if the SelectedIndex should be updated.</param>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.SelectedReplace(`0,System.Boolean)">
+            <summary>
+            Replaces the selected item with <paramref name="item"/>.
+            </summary>
+            <param name="item">The new item.</param>
+            <param name="updateSelectedIndex">Boolean indicating if the SelectedIndex should be updated
+            to point to the new item.</param>
+            <returns>True if the operation was successful, otherwise false.</returns>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.Replace(`0,System.Int32)">
+            <summary>
+            Replaces the item at the <paramref name="targetIndex"/> with <paramref name="item"/>.
+            </summary>
+            <param name="item">The new item.</param>
+            <param name="targetIndex">The index to replace.</param>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.Switch(System.Int32,System.Int32)">
+            <summary>
+            Switches two items in the ListControl.
+            </summary>
+            <param name="index1">The index of the item to switch with <paramref name="index2"/>.</param>
+            <param name="index2">The index of the item to switch with <paramref name="index1"/>.</param>
+            <returns>True if the operation was successful, otherwise false.</returns>
+        </member>
+        <member name="M:DarkGray.Forms.Decorators.ExtendedListControl`1.RelativeAdd(`0,System.Int32,System.Boolean)">
+            <summary>
+            Adds a new item to the ListControl. The position of the new item will
+            be determined relative to the currently selected item. If no item is
+            selected, this method operates as an alias of <see cref="M:System.Collections.IList.Add(System.Object)"/>.
+            </summary>
+            <param name="item">The new item.</param>
+            <param name="relativeIndex">The index at which to insert the item relative to the currently selected index. Can be negative.</param>
+            <param name="updateSelectedIndex">If true, the control's selectedIndex will be updated with the new index.</param>
+            <returns>True if the operation was successful, otherwise false.</returns>
+        </member>
+        <member name="P:DarkGray.Forms.Decorators.ExtendedListControl`1.Control">
+            <summary>
+            The decorated control passed in as a constructor parameter.
+            </summary>
+        </member>
+        <member name="T:DarkGray.Timers.Timer">
+            <summary>
+            Generates recurring events in an application.
+            
+            Contains several more advanced features than
+            <see cref="T:System.Timers.Timer"/>.
+            </summary>
+            <seealso cref="T:System.Timers.Timer"/>
+        </member>
+        <member name="M:DarkGray.Timers.Timer.#ctor">
+            <summary>
+            See <see cref="M:System.Timers.Timer.#ctor"/>.
+            </summary>
+        </member>
+        <member name="M:DarkGray.Timers.Timer.#ctor(System.Double)">
+            <summary>
+            See <see cref="M:System.Timers.Timer.#ctor"/>.
+            </summary>
+        </member>
+        <member name="M:DarkGray.Timers.Timer.Start">
+            <summary>
+            See <see cref="M:System.Timers.Timer.Start"/>.
+            </summary>
+        </member>
+        <member name="M:DarkGray.Timers.Timer.Stop">
+            <summary>
+            See <see cref="M:System.Timers.Timer.Stop"/>.
+            </summary>
+        </member>
+        <member name="P:DarkGray.Timers.Timer.TimeRemaining">
+            <summary>
+            Gets the time remaining until the next raising of the
+            <see cref="E:System.Timers.Timer.Elapsed"/> event.
+            </summary>
+            <returns>
+            Returns the time remainig until the next raising of the
+            <see cref="E:System.Timers.Timer.Elapsed"/> event.
+            
+            <para>Said time will always be greater than or equal to 0
+            and will always return 0 if <see cref="P:System.Timers.Timer.Enabled"/>
+            is false.</para>
+            </returns>
+            <remarks>
+            Note that the time returned may be a couple of milliseconds fast.
+            </remarks>
+        </member>
+        <member name="P:DarkGray.Timers.Timer.Enabled">
+            <summary>
+            See <see cref="P:System.Timers.Timer.Enabled"/>.
+            </summary>
+        </member>
+        <member name="P:DarkGray.Timers.Timer.Interval">
+            <summary>
+            See <see cref="P:System.Timers.Timer.Interval"/>.
+            </summary>
+        </member>
+    </members>
+</doc>

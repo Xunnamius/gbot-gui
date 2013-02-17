@@ -6,38 +6,42 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using GameBotGUI.Node;
 
 namespace GameBotGUI
 {
     internal partial class GBGTimeSettings : Form
     {
-        private GBGClickCreateModify parent;
-        private Dictionary<String, Object> timeSettings;
+        private GBGNodeCreateModify parent;
+        private InternalTimeSettings timeSettings;
 
         private Boolean _okExit = false;
         public Boolean OkExit { get { return _okExit; } }
 
-        public GBGTimeSettings(GBGClickCreateModify parent, Dictionary<string, object> timeSettings)
+        public GBGTimeSettings(GBGNodeCreateModify parent, InternalTimeSettings timeSettings)
         {
             InitializeComponent();
             this.parent = parent;
             this.timeSettings = timeSettings;
         }
 
-        private void GBGTimeSettings_Load(object sender, EventArgs e)
+        private void GBGTimeSettings_Load(Object sender, EventArgs e)
         {
-            GUIUtilities.ProcessSettingsData(this, timeSettings);
+            cbEntropy.Items.AddRange(Enum.GetNames(typeof(EntropyLevel)));
+
+            cbEntropy.SelectedIndex = (Int32) timeSettings.Entropy;
+            numForcedPause.Value = timeSettings.ForcedPause;
         }
 
-        public Dictionary<String, Object> GetGeneratedSettings()
+        public InternalTimeSettings GetSettings()
         {
-            return timeSettings.ToDictionary(e => e.Key, e => e.Value);
+            return timeSettings;
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnOk_Click(Object sender, EventArgs e)
         {
-            timeSettings["cbEntropy"] = cbEntropy.SelectedIndex;
-            timeSettings["numForcedPause"] = (Int32) numForcedPause.Value;
+            timeSettings.Entropy = (EntropyLevel) cbEntropy.SelectedIndex;
+            timeSettings.ForcedPause = GUIUtilities.ToInt32(numForcedPause.Value);
 
             _okExit = true;
             Close();

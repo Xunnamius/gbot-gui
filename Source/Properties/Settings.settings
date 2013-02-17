@@ -2,37 +2,64 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GameBotGUI.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="defaultNodeName" Type="System.String" Scope="Application">
+    <Setting Name="DefaultNodeName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">(no name)</Value>
     </Setting>
-    <Setting Name="defaultPriorityLevel" Type="System.Int32" Scope="Application">
+    <Setting Name="DefaultPriorityLevel" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="defaultNodeRuns" Type="System.Int32" Scope="Application">
+    <Setting Name="DefaultNodeRuns" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="defaultVOffset" Type="System.Int32" Scope="Application">
+    <Setting Name="DefaultVOffset" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="defaultHOffset" Type="System.Int32" Scope="Application">
+    <Setting Name="DefaultHOffset" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="defaultMouseSpeed" Type="System.Int32" Scope="Application">
+    <Setting Name="DefaultMouseSpeed" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
     </Setting>
-    <Setting Name="defaultNodeEntropy" Type="System.Int32" Scope="Application">
+    <Setting Name="DefaultNodeEntropy" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="defaultForcedPause" Type="System.Int32" Scope="Application">
+    <Setting Name="DefaultForcedPause" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="defaultEnabled" Type="System.Windows.Forms.CheckState" Scope="Application">
+    <Setting Name="DefaultEnabled" Type="System.Windows.Forms.CheckState" Scope="Application">
       <Value Profile="(Default)">Indeterminate</Value>
     </Setting>
-    <Setting Name="profileFileExtension" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">gbgprof</Value>
+    <Setting Name="ProfileFileExtension" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">gbp</Value>
     </Setting>
-    <Setting Name="profileHistory" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="ApplicationInternodeEntropy" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ApplicationIntranodeForcePauseEnabled" Type="System.Windows.Forms.CheckState" Scope="User">
+      <Value Profile="(Default)">Indeterminate</Value>
+    </Setting>
+    <Setting Name="ApplicationIntranodeEntropyEnabled" Type="System.Windows.Forms.CheckState" Scope="User">
+      <Value Profile="(Default)">Indeterminate</Value>
+    </Setting>
+    <Setting Name="ApplicationExecutionScheme" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ApplicationTotalRuns" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ApplicationRunInfinityTimes" Type="System.Windows.Forms.CheckState" Scope="User">
+      <Value Profile="(Default)">Indeterminate</Value>
+    </Setting>
+    <Setting Name="ApplicationGlobalOffsetX" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ApplicationGlobalOffsetY" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ApplicationMinimizeWindowOnRun" Type="System.Windows.Forms.CheckState" Scope="User">
+      <Value Profile="(Default)">Indeterminate</Value>
+    </Setting>
+    <Setting Name="ProfileDefaultSaveLocation" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

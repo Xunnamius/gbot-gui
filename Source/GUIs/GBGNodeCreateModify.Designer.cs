@@ -1,6 +1,6 @@
 ﻿namespace GameBotGUI
 {
-    partial class GBGClickCreateModify
+    partial class GBGNodeCreateModify
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GBGNodeCreateModify));
             this.label1 = new System.Windows.Forms.Label();
             this.txbName = new System.Windows.Forms.TextBox();
             this.btnNodeSettings = new System.Windows.Forms.Button();
@@ -98,7 +99,7 @@
             this.groupBox1.Size = new System.Drawing.Size(282, 237);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Click Controls";
+            this.groupBox1.Text = "Node Controls";
             // 
             // btnMoveDown
             // 
@@ -182,7 +183,7 @@
             this.lbRecords.Name = "lbRecords";
             this.lbRecords.Size = new System.Drawing.Size(269, 121);
             this.lbRecords.TabIndex = 0;
-            this.lbRecords.SelectedIndexChanged += new System.EventHandler(this.lbRecords_SelectedIndexChanged);
+            this.lbRecords.SelectedValueChanged += new System.EventHandler(this.lbRecords_SelectedValueChanged);
             // 
             // mkListener
             // 
@@ -201,7 +202,7 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // GBGClickCreateModify
+            // GBGNodeCreateModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -213,10 +214,12 @@
             this.Controls.Add(this.txbName);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "GBGClickCreateModify";
+            this.Name = "GBGNodeCreateModify";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GBGNodeCreateModify_FormClosing);
             this.Load += new System.EventHandler(this.GBGCreateAndModify_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);

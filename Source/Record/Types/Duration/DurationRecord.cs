@@ -6,12 +6,18 @@ using GameBotGUI.Record;
 
 namespace GameBotGUI.Record.Types.Duration
 {
-    class DurationRecord : RecordBase
+    [Serializable()]
+    public class DurationRecord : RecordBase
     {
         private Int32 _duration;
-        public Int32 Duration { get { return _duration; } set { _duration = value < 0 ? 0 : value; } }
+        public Int32 Duration
+        {
+            get { return _duration; }
+            set { _duration = value < 0 ? 0 : value; }
+        }
 
-        public DurationRecord(Int32 duration) : base(RecordType.DurationRecord)
+        public DurationRecord(Int32 duration)
+            : base(RecordType.DurationRecord)
         {
             _duration = duration;
         }
@@ -21,7 +27,7 @@ namespace GameBotGUI.Record.Types.Duration
             return "-- " + Type.ToString() + " for " + Duration.ToString() + " ms --";
         }
 
-        public override object Clone()
+        public override Object Clone()
         {
             return new DurationRecord(Duration);
         }

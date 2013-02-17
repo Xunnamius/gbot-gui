@@ -5,5 +5,5 @@ using System.Text;
 
 namespace GameBotGUI.Node
 {
-    enum PriorityLevel { Low, Medium, High }
+    public enum PriorityLevel { Low, Medium, High }
 }

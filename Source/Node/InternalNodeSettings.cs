@@ -5,13 +5,14 @@ using System.Text;
 
 namespace GameBotGUI.Node
 {
-    class InternalNodeSettings : ICloneable
+    [Serializable()]
+    public class InternalNodeSettings : ICloneable
     {
         private System.Windows.Forms.CheckState _enabled;
         private PriorityLevel _priority;
         private Int32 _runs;
-        private Int32 _vOffset;
-        private Int32 _hOffset;
+        private Int32 _offsetX;
+        private Int32 _offsetY;
         private MouseSpeed _mouseSpeed;
 
         public System.Windows.Forms.CheckState Enabled
@@ -32,16 +33,16 @@ namespace GameBotGUI.Node
             set { _runs = value < 1 ? 1 : value; }
         }
 
-        public Int32 VOffset
+        public Int32 OffsetX
         {
-            get { return _vOffset; }
-            set { _vOffset = value; }
+            get { return _offsetX; }
+            set { _offsetX = value; }
         }
 
-        public Int32 HOffset
+        public Int32 OffsetY
         {
-            get { return _hOffset; }
-            set { _hOffset = value; }
+            get { return _offsetY; }
+            set { _offsetY = value; }
         }
 
         public MouseSpeed MouseSpeed
@@ -53,21 +54,21 @@ namespace GameBotGUI.Node
         public InternalNodeSettings(System.Windows.Forms.CheckState enabled,
             PriorityLevel priority,
             Int32 repeat,
-            Int32 vOffset,
-            Int32 hOffset,
+            Int32 offsetX,
+            Int32 offsetY,
             MouseSpeed mouseSpeed)
         {
             _enabled = enabled;
             _priority = priority;
             _runs = repeat;
-            _vOffset = vOffset;
-            _hOffset = hOffset;
+            _offsetX = offsetX;
+            _offsetY = offsetY;
             _mouseSpeed = mouseSpeed;
         }
 
-        public object Clone()
+        public Object Clone()
         {
-            return new InternalNodeSettings(Enabled, Priority, Runs, VOffset, HOffset, MouseSpeed);
+            return new InternalNodeSettings(Enabled, Priority, Runs, OffsetX, OffsetY, MouseSpeed);
         }
     }
 }

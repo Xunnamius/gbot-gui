@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>255</ApplicationRevision>
+    <ApplicationRevision>256</ApplicationRevision>
     <ApplicationVersion>0.9.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -65,6 +65,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DarkGray">
+      <HintPath>.\DarkGray.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MouseKeyboardActivityMonitor">
       <HintPath>.\MouseKeyboardActivityMonitor.dll</HintPath>
@@ -81,13 +84,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="ExecutionScheme.cs" />
     <Compile Include="Node\EntropyLevel.cs" />
     <Compile Include="Node\InternalNodeSettings.cs" />
     <Compile Include="Node\InternalTimeSettings.cs" />
     <Compile Include="Node\MouseSpeed.cs" />
     <Compile Include="Node\NodeSettings.cs" />
     <Compile Include="Node\PriorityLevel.cs" />
-    <Compile Include="Node\Types\Click\ClickNodeRecordType.cs" />
     <Compile Include="GUIs\GBGAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,29 +105,23 @@
     <Compile Include="GUIs\GBGApplicationSettings.Designer.cs">
       <DependentUpon>GBGApplicationSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUIs\GBGClickCreateModify.cs">
+    <Compile Include="GUIs\GBGNodeCreateModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUIs\GBGClickCreateModify.Designer.cs">
-      <DependentUpon>GBGClickCreateModify.cs</DependentUpon>
+    <Compile Include="GUIs\GBGNodeCreateModify.Designer.cs">
+      <DependentUpon>GBGNodeCreateModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUIs\GBGClickAddModifyRecord.cs">
+    <Compile Include="GUIs\GBGNodeAddModifyRecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUIs\GBGClickAddModifyRecord.Designer.cs">
-      <DependentUpon>GBGClickAddModifyRecord.cs</DependentUpon>
+    <Compile Include="GUIs\GBGNodeAddModifyRecord.Designer.cs">
+      <DependentUpon>GBGNodeAddModifyRecord.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIs\GBGNodeSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUIs\GBGNodeSettings.Designer.cs">
       <DependentUpon>GBGNodeSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUIs\GBGProfileSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUIs\GBGProfileSettings.Designer.cs">
-      <DependentUpon>GBGProfileSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIs\GBGTimeSettings.cs">
       <SubType>Form</SubType>
@@ -133,6 +131,8 @@
     </Compile>
     <Compile Include="GUIs\GUIUtilities.cs" />
     <Compile Include="Hotkey.cs" />
+    <Compile Include="Profile\ProfileControllerAction.cs" />
+    <Compile Include="Profile\ProfileControllerActionEventArgs.cs" />
     <Compile Include="Profile\ProfileController.cs" />
     <Compile Include="Record\RecordType.cs" />
     <Compile Include="Record\Types\Click\ClickRecordType.cs" />
@@ -160,23 +160,22 @@
     <EmbeddedResource Include="GUIs\GBGApplicationSettings.resx">
       <DependentUpon>GBGApplicationSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUIs\GBGClickAddModifyRecord.resx">
-      <DependentUpon>GBGClickAddModifyRecord.cs</DependentUpon>
+    <EmbeddedResource Include="GUIs\GBGNodeAddModifyRecord.resx">
+      <DependentUpon>GBGNodeAddModifyRecord.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUIs\GBGClickCreateModify.resx">
-      <DependentUpon>GBGClickCreateModify.cs</DependentUpon>
+    <EmbeddedResource Include="GUIs\GBGNodeCreateModify.resx">
+      <DependentUpon>GBGNodeCreateModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\GBGMain.resx">
       <DependentUpon>GBGMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\GBGNodeSettings.resx">
       <DependentUpon>GBGNodeSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUIs\GBGProfileSettings.resx">
-      <DependentUpon>GBGProfileSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\GBGTimeSettings.resx">
       <DependentUpon>GBGTimeSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -186,6 +185,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="GameBotGUI_TemporaryKey.pfx" />

@@ -8,59 +8,16 @@ namespace GameBotGUI
 {
     static class GUIUtilities
     {
-        public static void ProcessSettingsData(Form form, Dictionary<String, Object> settings)
-        {
-            foreach(KeyValuePair<String, Object> setting in settings)
-            {
-                Control[] controls = form.Controls.Find(setting.Key, false);
-                if(controls.Length == 1)
-                {
-                    Control control = controls[0];
-                    if(control is ComboBox)
-                        ((ComboBox) control).SelectedIndex = (Int32) setting.Value;
-
-                    else if(control is CheckBox)
-                    {
-                        CheckState state = CheckState.Unchecked;
-                        Int32 val = (Int32) setting.Value;
-
-                        if(val == 1)      state = CheckState.Indeterminate;
-                        else if(val == 2) state = CheckState.Checked;
-                        ((CheckBox) control).CheckState = state;
-                    }
-
-                    else if(control is NumericUpDown)
-                        SetNumericUpDownValue((NumericUpDown) control, setting.Value);
-                }
-            }
-        }
-
-        public static Int32 CheckState2Int32(CheckState state)
-        {
-            Int32 stateInt32 = 0;
-            if(state == CheckState.Indeterminate) stateInt32 = 1;
-            else if(state == CheckState.Checked)  stateInt32 = 2;
-            return stateInt32;
-        }
-
         // Depending on the max limit of the NumericUpDown,
         // it might be a long or a decimal...
-        public static void SetNumericUpDownValue(NumericUpDown control, object value)
+        public static void SetNumericUpDownValue(NumericUpDown control, Object value)
         {
             control.Value = ToInt32(value);
         }
 
-        public static Int32 ToInt32(object value)
+        public static Int32 ToInt32(Object value)
         {
-            try
-            {
-                return (Int32) value;
-            }
-
-            catch(InvalidCastException edgecase)
-            {
-                return (Int32) ((long) value);
-            }
+            return Convert.ToInt32(value);
         }
     }
 }

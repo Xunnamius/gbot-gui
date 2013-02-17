@@ -5,5 +5,5 @@ using System.Text;
 
 namespace GameBotGUI.Node
 {
-    enum NodeType { ClickNode, GenericNode }
+    public enum NodeType { ClickNode, GenericNode }
 }

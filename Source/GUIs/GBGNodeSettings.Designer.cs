@@ -36,14 +36,22 @@
             this.chbxEnabled = new System.Windows.Forms.CheckBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.cbPriority = new System.Windows.Forms.ComboBox();
-            this.numRepeat = new System.Windows.Forms.NumericUpDown();
+            this.numLRuns = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.cbMouseSpeed = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numRepeat)).BeginInit();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numLOffsetX = new System.Windows.Forms.NumericUpDown();
+            this.numLOffsetY = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numLRuns)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLOffsetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLOffsetY)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -95,7 +103,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(105, 381);
+            this.btnOk.Location = new System.Drawing.Point(105, 468);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 5;
@@ -106,33 +114,30 @@
             // cbPriority
             // 
             this.cbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPriority.Enabled = false;
             this.cbPriority.FormattingEnabled = true;
-            this.cbPriority.Items.AddRange(new object[] {
-            "Low",
-            "Medium",
-            "High"});
             this.cbPriority.Location = new System.Drawing.Point(66, 95);
             this.cbPriority.Name = "cbPriority";
             this.cbPriority.Size = new System.Drawing.Size(121, 21);
             this.cbPriority.TabIndex = 6;
             // 
-            // numRepeat
+            // numLRuns
             // 
-            this.numRepeat.Location = new System.Drawing.Point(66, 216);
-            this.numRepeat.Maximum = new decimal(new int[] {
-            999,
+            this.numLRuns.Location = new System.Drawing.Point(66, 216);
+            this.numLRuns.Maximum = new decimal(new int[] {
+            99999,
             0,
             0,
             0});
-            this.numRepeat.Minimum = new decimal(new int[] {
+            this.numLRuns.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numRepeat.Name = "numRepeat";
-            this.numRepeat.Size = new System.Drawing.Size(74, 20);
-            this.numRepeat.TabIndex = 7;
-            this.numRepeat.Value = new decimal(new int[] {
+            this.numLRuns.Name = "numLRuns";
+            this.numLRuns.Size = new System.Drawing.Size(74, 20);
+            this.numLRuns.TabIndex = 7;
+            this.numLRuns.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -151,11 +156,6 @@
             // 
             this.cbMouseSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMouseSpeed.FormattingEnabled = true;
-            this.cbMouseSpeed.Items.AddRange(new object[] {
-            "Slow",
-            "Medium",
-            "Fast",
-            "Random"});
             this.cbMouseSpeed.Location = new System.Drawing.Point(94, 299);
             this.cbMouseSpeed.Name = "cbMouseSpeed";
             this.cbMouseSpeed.Size = new System.Drawing.Size(121, 21);
@@ -163,7 +163,7 @@
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(15, 44);
+            this.label6.Location = new System.Drawing.Point(12, 45);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(257, 35);
             this.label6.TabIndex = 10;
@@ -172,7 +172,7 @@
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(12, 123);
+            this.label7.Location = new System.Drawing.Point(12, 122);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(257, 69);
             this.label7.TabIndex = 11;
@@ -180,34 +180,112 @@
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(12, 243);
+            this.label8.Location = new System.Drawing.Point(12, 242);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(257, 31);
             this.label8.TabIndex = 12;
-            this.label8.Text = "The number of times this node will be repeated (back to back repeats) before movi" +
-    "ng on to the next node.";
+            this.label8.Text = "Runs represents the number of times this node will be run before moving on to the" +
+    " next node.";
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(12, 327);
+            this.label9.Location = new System.Drawing.Point(12, 326);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(257, 31);
+            this.label9.Size = new System.Drawing.Size(257, 45);
             this.label9.TabIndex = 13;
-            this.label9.Text = "Mouse Speed represents how fast mouse-related actions will be executed. \"Medium\" " +
+            this.label9.Text = "Mouse speed represents how fast mouse-related actions will be executed. \"Random\" " +
     "is recommended.";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 394);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(67, 13);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Local Offset:";
+            // 
+            // numLOffsetX
+            // 
+            this.numLOffsetX.Location = new System.Drawing.Point(94, 391);
+            this.numLOffsetX.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.numLOffsetX.Minimum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            -2147483648});
+            this.numLOffsetX.Name = "numLOffsetX";
+            this.numLOffsetX.Size = new System.Drawing.Size(50, 20);
+            this.numLOffsetX.TabIndex = 15;
+            // 
+            // numLOffsetY
+            // 
+            this.numLOffsetY.Location = new System.Drawing.Point(178, 391);
+            this.numLOffsetY.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.numLOffsetY.Minimum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            -2147483648});
+            this.numLOffsetY.Name = "numLOffsetY";
+            this.numLOffsetY.Size = new System.Drawing.Size(50, 20);
+            this.numLOffsetY.TabIndex = 16;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(147, 396);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(15, 13);
+            this.label12.TabIndex = 18;
+            this.label12.Text = "X";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(231, 396);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(15, 13);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "Y";
+            // 
+            // label13
+            // 
+            this.label13.Location = new System.Drawing.Point(12, 417);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(257, 31);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "The local offset will apply to and summarily shift all mouse click records within" +
+    " this node.";
             // 
             // GBGNodeSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 416);
+            this.ClientSize = new System.Drawing.Size(284, 503);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.numLOffsetY);
+            this.Controls.Add(this.numLOffsetX);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cbMouseSpeed);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.numRepeat);
+            this.Controls.Add(this.numLRuns);
             this.Controls.Add(this.cbPriority);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.chbxEnabled);
@@ -215,10 +293,15 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "GBGNodeSettings";
             this.Text = "GBGNodeSettings";
             this.Load += new System.EventHandler(this.GBGNodeSettings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numRepeat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLRuns)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLOffsetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLOffsetY)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,12 +316,18 @@
         private System.Windows.Forms.CheckBox chbxEnabled;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.ComboBox cbPriority;
-        private System.Windows.Forms.NumericUpDown numRepeat;
+        private System.Windows.Forms.NumericUpDown numLRuns;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbMouseSpeed;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numLOffsetX;
+        private System.Windows.Forms.NumericUpDown numLOffsetY;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label13;
     }
 }

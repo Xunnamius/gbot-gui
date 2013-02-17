@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GameBotGUI.Node
 {
-    interface INode
+    public interface INode
     {
         String Name { get; }
         NodeType Type { get; }

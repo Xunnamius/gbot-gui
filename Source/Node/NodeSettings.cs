@@ -2,23 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Collections.ObjectModel;
 using GameBotGUI.Record;
+using System.ComponentModel;
 
 namespace GameBotGUI.Node
 {
-    class NodeSettings : ICloneable
+    [Serializable()]
+    public class NodeSettings : ICloneable
     {
         private String _name;
         private NodeType _type;
-        private ObservableCollection<RecordBase> _records;
-        private InternalNodeSettings _internalNodeSettings;
-        private InternalTimeSettings _internalTimeSettings;
+
+        // XXX: For serializability
+        private BindingList<RecordBase> _records { get; set; }
+        private InternalNodeSettings _internalNodeSettings { get; set; }
+        private InternalTimeSettings _internalTimeSettings { get; set; }
+        //
 
         public String Name
         {
             get { return _name; }
-            set { _name = value ?? Properties.Settings.Default.defaultNodeName; }
+            set { _name = value ?? Properties.Settings.Default.DefaultNodeName; }
         }
 
         public NodeType Type
@@ -27,7 +31,7 @@ namespace GameBotGUI.Node
             set { _type = value; }
         }
 
-        public ObservableCollection<RecordBase> Records
+        public BindingList<RecordBase> Records
         {
             get { return _records; }
             set { _records = value; }
@@ -47,7 +51,7 @@ namespace GameBotGUI.Node
 
         public NodeSettings(String name,
             NodeType type,
-            ObservableCollection<RecordBase> records,
+            BindingList<RecordBase> records,
             InternalNodeSettings itNodeSettings,
             InternalTimeSettings itTimeSettings)
         {
@@ -58,10 +62,13 @@ namespace GameBotGUI.Node
             _internalTimeSettings = itTimeSettings;
         }
 
-        public object Clone()
+        public Object Clone()
         {
-            return new NodeSettings(Name, Type,
-                new ObservableCollection<RecordBase>(_records.ToList()),
+            BindingList<RecordBase> bl = new BindingList<RecordBase>();
+            foreach(RecordBase record in _records)
+                bl.Add((RecordBase) record.Clone());
+
+            return new NodeSettings(Name, Type, bl,
                 (InternalNodeSettings) internalNodeSettings.Clone(),
                 (InternalTimeSettings) internalTimeSettings.Clone());
         }
