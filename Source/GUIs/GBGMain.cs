@@ -485,7 +485,7 @@ namespace GameBotGUI
                                       iterations = duration / DURATION_ITERATION_INTERVAL,
                                       remainder = duration % DURATION_ITERATION_INTERVAL;
 
-                                if(duration < DURATION_ITERATION_INTERVAL * DURATION_ITERATION_MARGIN)
+                                if(duration > DURATION_ITERATION_INTERVAL * DURATION_ITERATION_MARGIN)
                                 {
                                     for(Int32 i = 0; i < iterations; ++i)
                                     {
@@ -499,6 +499,8 @@ namespace GameBotGUI
 
                                     System.Threading.Thread.Sleep(remainder);
                                 }
+
+                                else System.Threading.Thread.Sleep(duration);
                             }
 
                             else if(record.Type == RecordType.ClickRecord)
