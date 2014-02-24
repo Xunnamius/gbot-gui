@@ -80,9 +80,12 @@ namespace GameBotGUI
                 Properties.Settings.Default.ApplicationGlobalOffsetX,
                 Properties.Settings.Default.ApplicationGlobalOffsetY,
                 Properties.Settings.Default.ApplicationMinimizeWindowOnRun);
-            
+        }
+
+        private void GBGMain_Load(Object sender, EventArgs e)
+        {
             ttUpdater.Interval = 500;
-            ttUpdater.Tick += new EventHandler((o, e) =>
+            ttUpdater.Tick += new EventHandler((o, ev) =>
             {
                 long mil = totalRunTime.ElapsedMilliseconds,
                      seconds = mil / 1000,
@@ -103,17 +106,14 @@ namespace GameBotGUI
 
             hkRunBot.Pressed += delegate
             {
-                if(btnStopBot.Enabled)
+                if (btnStopBot.Enabled)
                     StopBot();
-                else if(btnRunBot.Enabled)
+                else if (btnRunBot.Enabled)
                     RunBot();
             };
 
             hkRunBot.Register(this);
-        }
 
-        private void GBGMain_Load(Object sender, EventArgs e)
-        {
             Text += ASMVersion;
 
             WriteLogLine("Version: ", ASMVersion);
@@ -351,7 +351,7 @@ namespace GameBotGUI
                     lblTotalRuns.Text = (Int32.Parse(lblTotalRuns.Text) + 1).ToString();
                 }
 
-                catch(FormatException fex) { }
+                catch(FormatException ignore) { }
 
                 DisableAllControls();
                 lbNodes.Enabled = false;

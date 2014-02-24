@@ -13,10 +13,6 @@ namespace GameBotGUI
         public GBGAbout()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
         }
 
         #region Assembly Attribute Accessors
@@ -101,7 +97,10 @@ namespace GameBotGUI
 
         private void GBGAbout_Load(Object sender, EventArgs e)
         {
-
+            this.Text = String.Format("About {0}", AssemblyTitle);
+            this.labelProductName.Text = AssemblyProduct;
+            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+            this.labelCopyright.Text = AssemblyCopyright;
         }
     }
 }
