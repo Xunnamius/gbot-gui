@@ -42,7 +42,6 @@
             this.btnDeleteRecord = new System.Windows.Forms.Button();
             this.btnCaptureClicks = new System.Windows.Forms.Button();
             this.lbRecords = new System.Windows.Forms.ListBox();
-            this.mkListener = new MouseKeyboardActivityMonitor.Controls.MouseKeyEventProvider();
             this.btnSave = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -185,13 +184,6 @@
             this.lbRecords.TabIndex = 0;
             this.lbRecords.SelectedValueChanged += new System.EventHandler(this.lbRecords_SelectedValueChanged);
             // 
-            // mkListener
-            // 
-            this.mkListener.Enabled = true;
-            this.mkListener.HookType = MouseKeyboardActivityMonitor.Controls.HookType.Global;
-            this.mkListener.MouseClickExt += new System.EventHandler<MouseKeyboardActivityMonitor.MouseEventExtArgs>(this.mkListener_MouseClickExt);
-            this.mkListener.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mkListener_KeyPress);
-            // 
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(9, 324);
@@ -238,7 +230,6 @@
         private System.Windows.Forms.Button btnCaptureClicks;
         private System.Windows.Forms.ListBox lbRecords;
         private System.Windows.Forms.Button btnClear;
-        private MouseKeyboardActivityMonitor.Controls.MouseKeyEventProvider mkListener;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnMoveUp;
         private System.Windows.Forms.Button btnModifyRecord;

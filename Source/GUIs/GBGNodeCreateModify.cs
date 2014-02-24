@@ -8,6 +8,8 @@ using GameBotGUI.Record;
 using GameBotGUI.Record.Types.Click;
 using GameBotGUI.Record.Types.Duration;
 using System.ComponentModel;
+using MouseKeyboardActivityMonitor;
+using MouseKeyboardActivityMonitor.WinApi;
 
 namespace GameBotGUI
 {
@@ -34,13 +36,90 @@ namespace GameBotGUI
         protected Boolean inCreateMode;
         protected ListChangedEventHandler recordListChangedHandler;
 
+        private readonly KeyboardHookListener m_KeyboardHookManager;
+        private readonly MouseHookListener m_MouseHookManager;
+
         public GBGNodeCreateModify(GBGMain parent, GenericNode internalNode, Boolean createMode)
         {
             InitializeComponent();
+
             this.parent = parent;
             inCreateMode = createMode;
             _internalNode = internalNode;
-            txbName.Text = internalNode.Name;
+
+            m_KeyboardHookManager = new KeyboardHookListener(new GlobalHooker());
+            m_KeyboardHookManager.Enabled = true;
+
+            m_MouseHookManager = new MouseHookListener(new GlobalHooker());
+            m_MouseHookManager.Enabled = true;
+
+            m_MouseHookManager.MouseClick += HookManager_MouseClick;
+            m_KeyboardHookManager.KeyPress += HookManager_KeyPress;
+        }
+
+        private void HookManager_KeyPress(Object sender, KeyPressEventArgs e)
+        {
+            if (mouseTracking == 1)
+            {
+                mouseTracking = 2;
+                e.Handled = true;
+
+                Text = "CAPTURE MODE [PRESS ANY KEY TO END]";
+
+                parent.trayNotif.BalloonTipTitle = "Tracking has begun!";
+                parent.trayNotif.BalloonTipText = "You may now click about the screen and have your "
+                    + "left/right/middle clicks recorded. When you are satisfied, press ANY "
+                    + "KEY to end mouse tracking.";
+                parent.trayNotif.ShowBalloonTip(10000);
+            }
+
+            else if (mouseTracking == 2)
+            {
+                mouseTracking = 0;
+                stopwatch.Stop();
+
+                parent.trayNotif.BalloonTipTitle = "Tracking has ended!";
+                parent.trayNotif.BalloonTipText = "You have ended mouse tracking successfully.";
+                parent.trayNotif.ShowBalloonTip(7000);
+
+                setDefaultTitle();
+                e.Handled = true;
+                Enabled = true;
+                Focus();
+            }
+        }
+
+        private void HookManager_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (mouseTracking == 2)
+            {
+                ClickRecordType clickType = ClickRecordType.NoClick;
+
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        clickType = ClickRecordType.LeftClick;
+                        break;
+
+                    case MouseButtons.Middle:
+                        clickType = ClickRecordType.MiddleClick;
+                        break;
+
+                    case MouseButtons.Right:
+                        clickType = ClickRecordType.RightClick;
+                        break;
+                }
+
+                if (stopwatch.IsRunning)
+                {
+                    InternalNode.Settings.Records.Add(new DurationRecord(GUIUtilities.ToInt32(stopwatch.ElapsedMilliseconds)));
+                    stopwatch.Restart();
+                }
+
+                else stopwatch.Start();
+
+                InternalNode.Settings.Records.Add(new ClickRecord(clickType, Cursor.Position));
+            }
         }
 
         private void setDefaultTitle()
@@ -51,6 +130,7 @@ namespace GameBotGUI
 
         private void GBGCreateAndModify_Load(Object sender, EventArgs e)
         {
+            txbName.Text = _internalNode.Name;
             lbRecords.DataSource = InternalNode.Settings.Records;
             elbRecords = new ExtendedListControl<RecordBase>(lbRecords);
             recordListChangedHandler = new ListChangedEventHandler(Records_ListChanged);
@@ -87,6 +167,13 @@ namespace GameBotGUI
         private void GBGNodeCreateModify_FormClosing(Object sender, FormClosingEventArgs e)
         {
             InternalNode.Settings.Records.ListChanged -= recordListChangedHandler;
+            m_MouseHookManager.MouseClick -= HookManager_MouseClick;
+            m_KeyboardHookManager.KeyPress -= HookManager_KeyPress;
+            m_MouseHookManager.Enabled = false;
+            m_KeyboardHookManager.Enabled = false;
+
+            if(stopwatch.IsRunning)
+                stopwatch.Stop();
         }
 
         private void btnClear_Click(Object sender, EventArgs e)
@@ -138,71 +225,6 @@ namespace GameBotGUI
             Text = "PRE-CAPTURE MODE [PRESS ANY KEY TO BEGIN]";
             Enabled = false;
             mouseTracking = 1;
-        }
-
-        private void mkListener_KeyPress(Object sender, KeyPressEventArgs e)
-        {
-            if(mouseTracking == 1)
-            {
-                mouseTracking = 2;
-                e.Handled = true;
-
-                Text = "CAPTURE MODE [PRESS ANY KEY TO END]";
-
-                parent.trayNotif.BalloonTipTitle = "Tracking has begun!";
-                parent.trayNotif.BalloonTipText = "You may now click about the screen and have your "
-                    + "left/right/middle clicks recorded. When you are satisfied, press ANY "
-                    + "KEY to end mouse tracking.";
-                parent.trayNotif.ShowBalloonTip(10000);
-            }
-
-            else if(mouseTracking == 2)
-            {
-                mouseTracking = 0;
-                stopwatch.Stop();
-
-                parent.trayNotif.BalloonTipTitle = "Tracking has ended!";
-                parent.trayNotif.BalloonTipText = "You have ended mouse tracking successfully.";
-                parent.trayNotif.ShowBalloonTip(7000);
-
-                setDefaultTitle();
-                e.Handled = true;
-                Enabled = true;
-                Focus();
-            }
-        }
-
-        private void mkListener_MouseClickExt(Object sender, MouseKeyboardActivityMonitor.MouseEventExtArgs e)
-        {
-            if(mouseTracking == 2)
-            {
-                ClickRecordType clickType = ClickRecordType.NoClick;
-
-                switch(e.Button)
-                {
-                    case MouseButtons.Left:
-                        clickType = ClickRecordType.LeftClick;
-                        break;
-
-                    case MouseButtons.Middle:
-                        clickType = ClickRecordType.MiddleClick;
-                        break;
-
-                    case MouseButtons.Right:
-                        clickType = ClickRecordType.RightClick;
-                        break;
-                }
-
-                if(stopwatch.IsRunning)
-                {
-                    InternalNode.Settings.Records.Add(new DurationRecord(GUIUtilities.ToInt32(stopwatch.ElapsedMilliseconds)));
-                    stopwatch.Restart();
-                }
-
-                else stopwatch.Start();
-
-                InternalNode.Settings.Records.Add(new ClickRecord(clickType, Cursor.Position));
-            }
         }
 
         private void btnNodeSettings_Click(Object sender, EventArgs e)
